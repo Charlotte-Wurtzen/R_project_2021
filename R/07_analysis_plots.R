@@ -16,5 +16,6 @@ golub_data_long <- golub_clean_aug %>%
 # Histogram ----------------------------------------------------------------
 golub_data_long %>% 
   count(value) %>% 
-  ggplot(aes(x= value, y=n))+
+  ggplot(aes(x= value, y=n, fill= value))+
   geom_col()
+
