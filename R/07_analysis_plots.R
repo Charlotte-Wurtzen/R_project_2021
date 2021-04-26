@@ -36,8 +36,8 @@ g1 <- golub_data_long_sample %>%
   theme(plot.title = element_text(hjust = 0.5)) + 
   labs(title = "ALL") + 
   xlab(NULL) + 
-  ylab(label="Gene expression") +
-  xlim(0, 33)
+  ylab(label="Genes") +
+  xlim(0, 5)
 
 
 
@@ -50,7 +50,7 @@ g2 <- golub_data_long_sample %>%
   labs(title = "AML") + 
   xlab("Gene expression level on Sample Data") + 
   ylab(NULL) + 
-  xlim(0, 33)
+  xlim(0, 5)
 
 
 histogram2 <- g1 + g2 
