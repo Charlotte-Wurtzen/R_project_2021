@@ -17,12 +17,13 @@ source(file = "R/99_project_functions.R")
 golub_data_long <- longer(golub_clean_aug)
 
 # Histograms ----------------------------------------------------------------
-golub_data_long %>% 
+histogram1 <- 
+  golub_data_long %>% 
   count(type) %>% 
   ggplot(aes(x= type, y=n, fill= type))+
   geom_col()
 
-# sample 100 random genes
+# sample 50 random genes
 set.seed(12345)
 golub_data_long_sample <- 
   golub_data_long %>% 
@@ -47,22 +48,27 @@ g2 <- golub_data_long_sample %>%
   theme_bw(base_size = 8) +
   theme(plot.title = element_text(hjust = 0.5)) + 
   labs(title = "AML") + 
-  xlab("Gene expression level") + 
+  xlab("Gene expression level on Sample Data") + 
   ylab(NULL) + 
   xlim(0, 33)
 
 
-g1 + g2 
+histogram2 <- g1 + g2 
 
 # Scatter plot ------------------------------------------------------------
 
-ggplot(data = golub_data_long_sample, mapping = aes(x =gene, y = norm_expr_level, colour = norm_expr_level)) +
+scatter_plot <- 
+  ggplot(data = golub_data_long_sample, mapping = aes(x =gene, y = norm_expr_level, colour = norm_expr_level)) +
   geom_point() + 
   scale_color_gradient(low="blue", high="red")+
   theme_minimal()+
-  ylab(label="Normalized Expression Level") +
+  ylab(label="Normalized Expression Level on Sample Data") +
   xlab(label="Gene") +
   labs(title = "?", caption = "Group 7")+
 theme(legend.position = 'bottom', axis.text.x = element_text(angle = 45, hjust=1))
 
+# Write data --------------------------------------------------------------
+ggsave("results/07_histogram1.png", plot = histogram1)
+ggsave("results/07_histogram2.png", plot = histogram2)
+ggsave("results/07_scatter_plot.png", plot = scatter_plot)
 
