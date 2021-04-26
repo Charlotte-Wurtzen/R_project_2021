@@ -16,12 +16,7 @@ golub_clean_aug <- read_tsv(file = "data/03_golub_clean_aug.tsv.gz")
 
 
 # Wrangle data ------------------------------------------------------------
-golub_data_long <- golub_clean_aug %>% 
-  pivot_longer(cols = -c(type, value), 
-               names_to = "gene", 
-               values_to = "expr_level") %>% 
-  mutate(norm_expr_level = (expr_level - mean(expr_level))/sd(expr_level)) %>% 
-  select(-c(type, expr_level))
+golub_data_long <- longer(golub_clean_aug)
 
 # Model data
 golub_data_long_nested <- golub_data_long %>% 
