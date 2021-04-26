@@ -8,3 +8,10 @@ longer <- function(data){
     select(-c(value, expr_level))
   return(data_long)
 }
+
+groupnest <- function(data){
+  data %>% 
+    group_by(gene) %>% 
+    nest() %>% 
+    ungroup() 
+}
