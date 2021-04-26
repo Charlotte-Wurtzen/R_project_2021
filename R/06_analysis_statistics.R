@@ -21,7 +21,7 @@ golub_data_long <- longer(golub_clean_aug)
 golub_data_long_nested <- groupnest(golub_data_long)
 
 # sample 100 random genes
-set.seed(54321)
+set.seed(928488)
 golub_data_long_nested <- 
   golub_data_long_nested %>% 
   sample_n(100)
@@ -30,7 +30,7 @@ golub_data_long_nested <-
 
 # fit logistic model on gene
 golub_expr_data_long_nested = golub_data_long_nested %>%
-  mutate(mdl = map(data, ~ glm(type ~ norm_expr_level,
+  mutate(mdl = map(data, ~glm(type ~ norm_expr_level,
                               data = .x,
                               family = binomial(link = "logit"))))
 
@@ -97,7 +97,10 @@ significant_plot <- significant_genes %>%
         legend.position = "bottom") +
   labs(y = "") 
 
+
 # Write data --------------------------------------------------------------
+#write_tsv(x = golub_expr_data_long_nested, file = "data/06_golub_expr_data_long_nested.tsv.gz")
+
 ggsave("results/06_CI_plot.png", plot = CI_plot)
 
 ggsave("results/06_significant_plot.png", plot = significant_plot)
