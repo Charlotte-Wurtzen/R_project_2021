@@ -14,6 +14,7 @@ golub_data_long <- golub_clean_aug %>%
                names_to = "gene", 
                values_to = "expr_level") %>% 
               mutate(norm_expr_level = (expr_level - mean(expr_level))/sd(expr_level) )
+
 # Histogram ----------------------------------------------------------------
 golub_data_long %>% 
   count(value) %>% 
@@ -21,7 +22,7 @@ golub_data_long %>%
   geom_col()
 
 # Scatter plot ------------------------------------------------------------
-ggplot(data = golub_data_long, mapping = aes(x = str_extract(gene,"5_at"), y = value, colour = norm_expr_level)) +
+ggplot(data = golub_data_long, mapping = aes(x = gene, y = value, colour = expr_level)) +
   geom_point() + 
   scale_color_gradient(low="blue", high="red")+
   theme_minimal()+

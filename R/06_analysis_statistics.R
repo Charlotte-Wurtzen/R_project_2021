@@ -5,6 +5,9 @@ rm(list = ls())
 library("tidyverse")
 library("broom")
 
+# Define functions --------------------------------------------------------
+source(file = "R/99_project_functions.R")
+
 # Load data ---------------------------------------------------------------
 golub_clean_aug <- read_tsv(file = "data/03_golub_clean_aug.tsv.gz")
 
@@ -12,17 +15,10 @@ golub_clean_aug <- read_tsv(file = "data/03_golub_clean_aug.tsv.gz")
 # Wrangle data ------------------------------------------------------------
 
 # pivot longer 
-golub_data_long = 
-  golub_clean_aug %>% 
-  pivot_longer(cols = -c(type,value), names_to = "gene", values_to = "expr_level") %>% 
-  mutate(normal_expr_level = (expr_level - mean(expr_level))/sd(expr_level))
+golub_data_long <- longer(golub_clean_aug)
 
 # grouping and nesting 
-golub_data_long_nested = 
-  golub_data_long %>% 
-  group_by(gene) %>% 
-  nest() %>% 
-  ungroup() 
+golub_data_long_nested <- groupnest(golub_data_long)
 
 # sample 100 random genes
 set.seed(12345)
@@ -34,7 +30,7 @@ golub_data_long_nested <-
 
 # fit logistic model on gene
 golub_expr_data_long_nested = golub_data_long_nested %>%
-  mutate(mdl = map(data, ~ glm(type ~ normal_expr_level,
+  mutate(mdl = map(data, ~ glm(type ~ norm_expr_level,
                               data = .x,
                               family = binomial(link = "logit"))))
 

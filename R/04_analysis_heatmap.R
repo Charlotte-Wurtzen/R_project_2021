@@ -24,6 +24,10 @@ golub_data_long <-
 
 
 # Visualise data ----------------------------------------------------------
+<<<<<<< HEAD
+#pl1 <- golub_data_long %>% 
+  
+=======
 golub_data_long %>% 
   ggplot(golub_data_long, 
          mapping = aes(x = type,y = gene, fill = norm_expr_level)) +
@@ -35,3 +39,4 @@ golub_data_long %>%
 ggsave(filename = "results/04_heatmap.png", width = 16, height = 9, dpi = 72)
 
   
+>>>>>>> af4cfd13dce15579345b1fb2776e4bcc8c39804c
