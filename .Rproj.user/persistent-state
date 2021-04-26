@@ -1,3 +1,15 @@
+<<<<<<< HEAD
+activeClientUrl="https://2050e7a87f2f461cb22bf6cde0b959d7.app.rstudio.cloud/"
+build-last-errors="[]"
+build-last-errors-base-dir=""
+build-last-outputs="[]"
+compile_pdf_state="{\"tab_visible\":false,\"running\":false,\"target_file\":\"\",\"output\":\"\",\"errors\":[]}"
+files.monitored-path=""
+find-in-files-state="{\"handle\":\"\",\"input\":\"\",\"path\":\"\",\"regex\":false,\"ignoreCase\":false,\"results\":{\"file\":[],\"line\":[],\"lineValue\":[],\"matchOn\":[],\"matchOff\":[],\"replaceMatchOn\":[],\"replaceMatchOff\":[]},\"running\":false,\"replace\":false,\"preview\":false,\"gitFlag\":false,\"replacePattern\":\"\"}"
+imageDirtyState="1"
+portToken="57f8d7b1bf9d"
+saveActionState="-1"
+=======
 activeClientUrl="https://ec6ea1d3953e4d48af0ad02d88eb3efd.app.rstudio.cloud/"
 build-last-errors="[]"
 build-last-errors-base-dir=""
@@ -7,4 +19,8 @@ files.monitored-path=""
 find-in-files-state="{\"handle\":\"\",\"input\":\"\",\"path\":\"\",\"regex\":false,\"ignoreCase\":false,\"results\":{\"file\":[],\"line\":[],\"lineValue\":[],\"matchOn\":[],\"matchOff\":[],\"replaceMatchOn\":[],\"replaceMatchOff\":[]},\"running\":false,\"replace\":false,\"preview\":false,\"gitFlag\":false,\"replacePattern\":\"\"}"
 imageDirtyState="1"
 portToken="d18bc9bc4e59"
+<<<<<<< HEAD
 saveActionState="-1"
+=======
+>>>>>>> 589bc31f1ba21dd92325b134de77897c9b33e72d
+>>>>>>> a95a1b72797e3a3552a1ab4b944b1a8e29e76964
