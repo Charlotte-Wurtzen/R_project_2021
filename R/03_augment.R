@@ -17,7 +17,7 @@ golub_clean <- read_tsv(file = "data/02_golub_clean.tsv.gz")
 # Wrangle data ------------------------------------------------------------
 golub_clean_aug <- golub_clean %>% 
   mutate(type = case_when(value == "ALL" ~ 0,
-                          value == "AML" ~ 1)) %>% 
+                          value == "AML" ~ 1)) 
   relocate(type)
 
 
