@@ -50,8 +50,6 @@ golub_expr_data_long_nested = golub_expr_data_long_nested %>%
          gene_label = case_when(identified_as == "Significant" ~ gene,
                                 identified_as == "Non-significant" ~ ""))
 
-# find most significant genes
-
 # Visualization ------------------------------------------------------------
 
 # Confidence interval plot
