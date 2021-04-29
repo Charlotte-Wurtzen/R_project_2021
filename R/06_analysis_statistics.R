@@ -20,6 +20,22 @@ golub_data_long <- longer(golub_clean_aug)
 # grouping and nesting 
 golub_data_long_nested <- groupnest(golub_data_long)
 
+golub_data_long_nested %>% pluck()
+
+
+
+
+# separate data on cancer type
+ALL <- golub_clean_aug %>% 
+  filter(type == 0)
+
+ALL %>% 
+  summarise(avg_expr = mean())
+
+AML <- golub_clean_aug %>% 
+  filter(type == 1)
+
+
 # sample 100 random genes
 set.seed(928488)
 golub_data_long_nested <- 
