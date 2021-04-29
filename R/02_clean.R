@@ -11,7 +11,16 @@ y <- read_tsv(file = "data/golub_y.tsv.gz")
 
 
 # Wrangle data ------------------------------------------------------------
-golub_clean <- bind_cols(x,y) 
+golub_clean <- bind_cols(x,y)
+
+# separate by type and join again
+ALL <- golub_clean %>% 
+  filter(value == "ALL")
+
+AML <- golub_clean %>% 
+  filter(value == "AML")
+
+golub_clean <- ALL %>% full_join(AML)
 
 
 # Write data --------------------------------------------------------------
