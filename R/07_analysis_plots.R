@@ -55,6 +55,13 @@ g2 <- golub_data_long_sample %>%
 
 histogram2 <- g1 + g2 
 
+# Box plot ------------------------------------------------------------
+golub_data_long_sample %>%
+  ggplot(mapping = aes(x = type, y = , fill=type)) +
+  geom_boxplot(alpha = 0.5) +
+  theme_classic()
+
+
 # Scatter plot ------------------------------------------------------------
 
 scatter_plot <- 
