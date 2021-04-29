@@ -6,3 +6,5 @@ source(file = "R/04_analysis_heatmap.R")
 source(file = "R/05_analysis_PCA.R")
 source(file = "R/06_analysis_statistics.R")
 source(file = "R/07_analysis_plots.R")
+
+# call to knitr
