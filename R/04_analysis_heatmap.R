@@ -25,11 +25,21 @@ golub_data_long <-
 
 # Visualise data ----------------------------------------------------------
 golub_data_long %>% 
-  ggplot(golub_data_long, 
-         mapping = aes(x = type,y = gene, fill = norm_expr_level)) +
+  arrange(desc(norm_expr_level)) %>% 
+  
+  ggplot(mapping = aes(x = type,y = gene, fill = norm_expr_level)) +
   geom_tile() +
+  
+  theme_classic(base_size = 12) +
+  ggtitle("Normalized gene expression levels distinguishing ALL and AML") + 
+  scale_fill_gradient2(low = "blue", high = "red", mid = "white",midpoint = 2) +
   xlab(label = "Type") + 
-  theme(axis.title.y = element_blank(), # Remove the y-axis title
-        axis.text.x = element_text(angle = 45, vjust = 0.5)) # Rotate the x-axis labels
+  ylab(label = "Genes") + 
+  labs(fill = "Normalized expression level") +
+  theme(legend.position="bottom") +
+  
+  # facet_grid makes two panels, one for ALL, one for AML:
+  facet_grid(~ type, switch = "x", scales = "free_x", space = "free_x") + 
+  theme(axis.text.x = element_blank()) 
 
 ggsave(filename = "results/04_heatmap.png", width = 16, height = 9, dpi = 72)
