@@ -120,3 +120,4 @@ significant_plot <- significant_genes %>%
 ggsave("results/06_CI_plot.png", plot = CI_plot)
 
 ggsave("results/06_significant_plot.png", plot = significant_plot)
+

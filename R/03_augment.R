@@ -15,6 +15,17 @@ golub_clean <- read_tsv(file = "data/02_golub_clean.tsv.gz")
 
 
 # Wrangle data ------------------------------------------------------------
+
+# separate by type and join again
+ALL <- golub_clean %>% 
+  filter(value == "ALL")
+
+AML <- golub_clean %>% 
+  filter(value == "AML")
+
+golub_clean <- ALL %>% full_join(AML)
+
+# mutate type
 golub_clean_aug <- golub_clean %>% 
   mutate(type = case_when(value == "ALL" ~ 0,
                           value == "AML" ~ 1)) %>% 

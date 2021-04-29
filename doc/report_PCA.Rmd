@@ -1,0 +1,17 @@
+---
+title: "PCA_results"
+author: "Group 7"
+date: "4/29/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(knitr)    # For knitting document and include_graphics function
+```
+
+PCA plot 1:
+
+```{r plot1, echo=FALSE}
+include_graphics('/cloud/project/results/05_plot1.png')
+```

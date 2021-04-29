@@ -24,9 +24,11 @@ golub_data_long_nested <- golub_data_long %>%
   nest() %>% 
   ungroup()
 
+#====Sample should not be here
 set.seed(12345)
 golub_data_long_nested <- golub_data_long_nested %>% 
   sample_n(100)
+#=============================
 
 golub_data_long_nested <- golub_data_long_nested %>% 
   mutate(mdl = map(data, ~glm(type ~ norm_expr_level,
