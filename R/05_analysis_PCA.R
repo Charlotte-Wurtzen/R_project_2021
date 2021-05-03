@@ -19,7 +19,7 @@ golub_top_genes <- read_tsv(file = "data/04_top_genes.tsv.gz")
 # Wrangle data ------------------------------------------------------------
 # Model data
 top_gene_names = golub_top_genes %>% 
-  groupnest() %>% 
+  groupnest(gene) %>% 
   head(n = 15L)
 
 pca_fit <- golub_clean_aug %>% 

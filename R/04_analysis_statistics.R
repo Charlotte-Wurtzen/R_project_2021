@@ -19,7 +19,7 @@ golub_clean_aug <- read_tsv(file = "data/03_golub_clean_aug.tsv.gz")
 golub_data_long <- longer(golub_clean_aug)
 
 # grouping and nesting 
-golub_data_long_nested <- groupnest(golub_data_long)
+golub_data_long_nested <- groupnest(golub_data_long, gene)
 
 
 # Statistics ------------------------------------------------------------
