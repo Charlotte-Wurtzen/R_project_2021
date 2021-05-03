@@ -44,8 +44,6 @@ golub_data_long %>%
   theme(axis.text.x = element_blank()) 
 
 ggsave(filename = "results/04_heatmap.png", width = 16, height = 9, dpi = 72)
-<<<<<<< HEAD
-=======
 
 
 
@@ -72,5 +70,3 @@ golub_clean_aug %>%
   theme(axis.text.x = element_blank()) 
 '''
 
-
->>>>>>> 92d37ee0ff544a1f0fa9ed094f4b0cdfcd95cf9a
