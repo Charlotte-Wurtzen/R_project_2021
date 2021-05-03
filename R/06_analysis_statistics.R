@@ -22,28 +22,6 @@ golub_data_long <- longer(golub_clean_aug)
 golub_data_long_nested <- groupnest(golub_data_long)
 
 
-# separate data on cancer type
-ALL <- golub_clean_aug %>% 
-  filter(type == 0) %>% 
-  select(-c(value,type)) 
-
-avg_ALL <- ALL %>% 
-  colMeans() %>% 
-  as_tibble() %>% 
-  mutate(gene_names = colnames(ALL)) %>% 
-  arrange(desc(value))
-
-AML <- golub_clean_aug %>% 
-  filter(type == 1) %>% 
-  select(-c(value,type))
-
-avg_AML <- AML %>% 
-  colMeans() %>% 
-  as_tibble() %>% 
-  mutate(gene_names = colnames(AML)) %>% 
-  arrange(desc(value))
-
-
 # Statistics ------------------------------------------------------------
 
 # fit logistic model on gene
@@ -84,6 +62,32 @@ top_genes = significant_genes %>%
 top_genes = top_genes %>% 
   unnest(data) %>% 
   select(c(gene, type, norm_expr_level))
+
+# separate top genes based on cancer type 
+ALL <- top_genes %>% 
+  pivot_wider(names_from = "gene", values_from = "norm_expr_level") %>% 
+  unnest() %>% 
+  filter(type == 0) %>% 
+  select(-c(type)) 
+
+avg_ALL <- ALL %>% 
+  colMeans() %>% 
+  as_tibble() %>% 
+  mutate(gene_names = colnames(ALL)) %>% 
+  arrange(desc(value))
+
+AML <- top_genes %>% 
+  pivot_wider(names_from = "gene", values_from = "norm_expr_level") %>% 
+  unnest() %>% 
+  filter(type == 1) %>% 
+  select(-c(type))
+
+avg_AML <- AML %>% 
+  colMeans() %>% 
+  as_tibble() %>% 
+  mutate(gene_names = colnames(AML)) %>% 
+  arrange(desc(value))
+
 
 # Write data --------------------------------------------------------------
 write_tsv(x = top_genes, file = "data/06_top_genes.tsv.gz")
