@@ -13,38 +13,23 @@ source(file = "R/99_project_functions.R")
 
 # Load data ---------------------------------------------------------------
 golub_clean_aug <- read_tsv(file = "data/03_golub_clean_aug.tsv.gz")
+golub_top_genes <- read_tsv(file = "data/06_top_genes.tsv.gz")
 
 
 # Wrangle data ------------------------------------------------------------
-golub_data_long <- longer(golub_clean_aug)
-
 # Model data
-golub_data_long_nested <- golub_data_long %>% 
-  group_by(gene) %>% 
-  nest() %>% 
-  ungroup()
+top_gene_names = golub_top_genes %>% 
+  groupnest() %>% 
+  head(n = 15L)
 
-#====Sample should not be here
-#set.seed(12345)
-#golub_data_long_nested <- golub_data_long_nested %>% 
-#  sample_n(100)
-#=============================
-
-golub_data_long_nested <- golub_data_long_nested %>% 
-  mutate(mdl = map(data, ~glm(type ~ norm_expr_level,
-                              data = .x,
-                              family = binomial(link = "logit"))))
-
-# Visualise data ----------------------------------------------------------
-golub_data_wide <- golub_clean_aug %>% 
-  select(type, pull(golub_data_long_nested, gene))
-
-pca_fit <- golub_data_wide %>% 
+pca_fit <- golub_clean_aug %>% 
   select(where(is.numeric)) %>% 
   prcomp(scale = TRUE)
 
+
+# Visualise data ----------------------------------------------------------
 plot1 <- pca_fit %>% 
-  augment(golub_data_wide) %>% 
+  augment(golub_clean_aug) %>% 
   ggplot(aes(.fittedPC1, .fittedPC2, 
              color = factor(type))) + 
   geom_point(size = 1.5) +
@@ -63,17 +48,18 @@ plot2 <- pca_fit %>%
   pivot_wider(names_from = "PC",
               names_prefix = "PC",
               values_from = "value") %>% 
+  filter(column %in% pull(top_gene_names, gene)) %>% 
   ggplot(aes(PC1, PC2)) + 
   geom_segment(xend = 0, 
                yend = 0, 
                arrow = arrow_style) +
   geom_text(aes(label = column),
-            hjust = 1,
-            nudge_x = -0.02,
-            color = "#904C2F") +
-  xlim(-0.11, 0.03) + ylim(-0.05, 0.025) + 
-  coord_fixed() +
+            hjust = 0.5,
+            nudge_x = -0.0008,
+            color = "#904C2F",
+            size = 3) +
   theme_minimal_grid(12)
+plot2
 
 plot3 <- pca_fit %>% 
   tidy(matrix = "eigenvalues") %>% 
@@ -86,6 +72,7 @@ plot3 <- pca_fit %>%
     labels = scales::percent_format(),
     expand = expansion(mult = c(0, 0.01))) +
   theme_minimal_hgrid(12)
+
 
 # Write data --------------------------------------------------------------
 ggsave("results/05_PCA_plot1.png",
