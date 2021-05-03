@@ -42,11 +42,6 @@ avg_AML <- AML %>%
   mutate(gene_names = colnames(AML)) %>% 
   arrange(desc(value))
 
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-=======
->>>>>>> 50483dd5afb406ea9fac2508adac46929e1de617
 '''
 # sample 100 random genes
 set.seed(928488)
@@ -54,12 +49,7 @@ golub_data_long_nested <-
   golub_data_long_nested %>% 
   sample_n(100)
 '''
-<<<<<<< HEAD
-=======
 
-
->>>>>>> d45b956efa878e2607fd47f1accc15340d8398d0
->>>>>>> 50483dd5afb406ea9fac2508adac46929e1de617
 # Statistics ------------------------------------------------------------
 
 # fit logistic model on gene
