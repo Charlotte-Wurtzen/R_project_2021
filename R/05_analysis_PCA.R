@@ -18,16 +18,9 @@ golub_top_genes <- read_tsv(file = "data/06_top_genes.tsv.gz")
 
 # Wrangle data ------------------------------------------------------------
 # Model data
-golub_data_long_nested <- golub_data_long %>% 
-  group_by(gene) %>% 
-  nest() %>% 
-  ungroup()
-
 top_gene_names = golub_top_genes %>% 
-  group_by(gene) %>% 
-  nest() %>% 
-  head(n = 15L) %>% 
-  ungroup()
+  groupnest() %>% 
+  head(n = 15L)
 
 pca_fit <- golub_clean_aug %>% 
   select(where(is.numeric)) %>% 
