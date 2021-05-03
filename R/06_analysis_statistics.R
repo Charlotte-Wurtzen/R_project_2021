@@ -34,7 +34,8 @@ avg_ALL <- ALL %>%
   arrange(desc(value))
 
 AML <- golub_clean_aug %>% 
-  filter(type == 1)
+  filter(type == 1) %>% 
+  select(-c(value,type))
 
 avg_AML <- AML %>% 
   colMeans() %>% 
@@ -87,9 +88,13 @@ top_genes = top_genes %>%
 # Write data --------------------------------------------------------------
 write_tsv(x = top_genes, file = "data/06_top_genes.tsv.gz")
 
-ggsave("results/06_CI_plot.png", plot = CI_plot)
+write_tsv(x = avg_ALL, file = "data/06_avg_ALL.tsv.gz")
 
-ggsave("results/06_significant_plot.png", plot = significant_plot)
+write_tsv(x = avg_AML, file = "data/06_avg_AML.tsv.gz")
+
+#ggsave("results/06_CI_plot.png", plot = CI_plot)
+
+#ggsave("results/06_significant_plot.png", plot = significant_plot)
 
 
 #--------
