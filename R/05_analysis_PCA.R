@@ -13,7 +13,7 @@ source(file = "R/99_project_functions.R")
 
 # Load data ---------------------------------------------------------------
 golub_clean_aug <- read_tsv(file = "data/03_golub_clean_aug.tsv.gz")
-golub_top_genes <- read_tsv(file = "data/06_top_genes.tsv.gz")
+golub_top_genes <- read_tsv(file = "data/04_top_genes.tsv.gz")
 
 
 # Wrangle data ------------------------------------------------------------
