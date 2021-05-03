@@ -25,9 +25,9 @@ golub_data_long_nested <- golub_data_long %>%
   ungroup()
 
 #====Sample should not be here
-set.seed(12345)
-golub_data_long_nested <- golub_data_long_nested %>% 
-  sample_n(100)
+#set.seed(12345)
+#golub_data_long_nested <- golub_data_long_nested %>% 
+#  sample_n(100)
 #=============================
 
 golub_data_long_nested <- golub_data_long_nested %>% 
@@ -71,7 +71,7 @@ plot2 <- pca_fit %>%
             hjust = 1,
             nudge_x = -0.02,
             color = "#904C2F") +
-  xlim(-0.3, 0.3) + ylim(-0.3, 0.2) + 
+  xlim(-0.11, 0.03) + ylim(-0.05, 0.025) + 
   coord_fixed() +
   theme_minimal_grid(12)
 
@@ -88,11 +88,11 @@ plot3 <- pca_fit %>%
   theme_minimal_hgrid(12)
 
 # Write data --------------------------------------------------------------
-ggsave("results/05_plot1.png",
+ggsave("results/05_PCA_plot1.png",
        plot = plot1)
 
-ggsave("results/05_plot2.png",
+ggsave("results/05_PCA_plot2.png",
        plot = plot2)
 
-ggsave("results/05_plot3.png",
+ggsave("results/05_PCA_plot3.png",
        plot = plot3)
