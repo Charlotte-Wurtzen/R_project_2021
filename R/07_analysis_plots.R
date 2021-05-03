@@ -17,7 +17,12 @@ source(file = "R/99_project_functions.R")
 # pivot longer 
 golub_data_long <- longer(golub_clean_aug)
 
-# separate top gene data on cancer type in the 
+# average of top gene data
+top_genes_avg <- top_genes %>% 
+  group_by(gene) %>% 
+  summarise(avg_norm_expr_level = mean(norm_expr_level))
+
+# separate top gene data on cancer type and find average
 ALL_top <- top_genes%>% 
   filter(type == 0) %>% 
   select(-c(type)) 
@@ -42,7 +47,9 @@ histogram1 <-
   golub_data_long %>% 
   count(type) %>% 
   ggplot(aes(x= type, y=n, fill= type))+
-  geom_col()
+  geom_col()+
+  xlab(label="Types ( 0 = ALL, 1 = AML )") +
+  ylab(label= "Number of genes measured")
 
 
 # histogram showing expression of top genes divided into type
@@ -54,7 +61,8 @@ g1 <- avg_ALL_top %>%
   theme(plot.title = element_text(hjust = 0.5)) + 
   labs(title = "ALL") + 
   xlab(NULL) + 
-  ylab(label="Genes") 
+  ylab(label="Genes") +
+  theme_classic()
 
 
 g2 <- avg_AML_top %>%
@@ -63,35 +71,31 @@ g2 <- avg_AML_top %>%
   theme_bw(base_size = 8) +
   theme(plot.title = element_text(hjust = 0.5)) + 
   labs(title = "AML") + 
-  xlab("Gene expression level on Sample Data") + 
-  ylab(NULL) 
+  xlab("Gene expression level shown for top genes") + 
+  ylab(NULL) +
+  theme_classic()
  
 
 histogram2 <- g1 + g2 
 
 # Box plot ------------------------------------------------------------
 # this need to be fixed
-boxplot_ALL <- golub_data_long %>%
-  ggplot(mapping = aes(x = pluck(type==0), y = norm_expr_level , fill=type)) +
+boxplot <- golub_data_long %>%
+  ggplot(mapping = aes(x = type, y = norm_expr_level , fill=type)) +
   geom_boxplot(alpha = 0.5) +
   theme_classic()
 
-boxplot_AML <- golub_data_long %>%
-  ggplot(mapping = aes(x = pluck(type==1), y = norm_expr_level , fill=type)) +
-  geom_boxplot(alpha = 0.5) +
-  theme_classic()
-
-boxplot_ALL/boxplot_AML
+boxplot
 
 # Scatter plot ------------------------------------------------------------
 scatter_plot <- 
-  ggplot(data = top_genes, mapping = aes(x =gene, y = norm_expr_level, colour = norm_expr_level)) +
+  ggplot(data = top_genes_avg, mapping = aes(x =gene, y = avg_norm_expr_level, colour = avg_norm_expr_level)) +
   geom_point() + 
   scale_color_gradient(low="blue", high="red")+
   theme_minimal()+
-  ylab(label="Normalized Expression Level on Sample Data") +
+  ylab(label="Normalized Expression Level") +
   xlab(label="Gene") +
-  labs(title = "?", caption = "Group 7")+
+  labs(title = "Expression value shown for each top gene", caption = "Group 7")+
 theme(legend.position = 'bottom', axis.text.x = element_text(angle = 45, hjust=1))
 
 # Write data --------------------------------------------------------------
