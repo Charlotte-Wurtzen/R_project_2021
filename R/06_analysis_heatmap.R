@@ -46,7 +46,6 @@ golub_top_genes_long %>%
   
   # facet_grid makes two panels, one for ALL, one for AML:
   facet_grid(~ type, switch = "x", scales = "free_x", space = "free_x")  
-  #theme(axis.text.x = element_blank()) 
 
 
 # save plot ----------------------------------------------------------
