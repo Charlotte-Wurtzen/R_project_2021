@@ -90,11 +90,11 @@ avg_AML <- AML %>%
 
 
 # Write data --------------------------------------------------------------
-write_tsv(x = top_genes, file = "data/06_top_genes.tsv.gz")
+write_tsv(x = top_genes, file = "data/04_top_genes.tsv.gz")
 
-write_tsv(x = avg_ALL, file = "data/06_avg_ALL.tsv.gz")
+write_tsv(x = avg_ALL, file = "data/04_avg_ALL.tsv.gz")
 
-write_tsv(x = avg_AML, file = "data/06_avg_AML.tsv.gz")
+write_tsv(x = avg_AML, file = "data/04_avg_AML.tsv.gz")
 
 #ggsave("results/06_CI_plot.png", plot = CI_plot)
 
