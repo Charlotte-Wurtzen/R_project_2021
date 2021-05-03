@@ -23,7 +23,7 @@ top_gene_names = golub_top_genes %>%
   head(n = 15L)
 
 pca_fit <- golub_clean_aug %>% 
-  select(where(is.numeric)) %>% 
+  select(where(is.numeric),-type) %>% 
   prcomp(scale = TRUE)
 
 
@@ -59,7 +59,7 @@ plot2 <- pca_fit %>%
             color = "#904C2F",
             size = 3) +
   theme_minimal_grid(12)
-plot2
+
 
 plot3 <- pca_fit %>% 
   tidy(matrix = "eigenvalues") %>% 
