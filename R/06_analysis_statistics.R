@@ -4,6 +4,7 @@ rm(list = ls())
 # Load libraries ----------------------------------------------------------
 library("tidyverse")
 library("broom")
+library("dplyr")
 
 # Define functions --------------------------------------------------------
 source(file = "R/99_project_functions.R")
@@ -20,11 +21,35 @@ golub_data_long <- longer(golub_clean_aug)
 # grouping and nesting 
 golub_data_long_nested <- groupnest(golub_data_long)
 
+
+# separate data on cancer type
+ALL <- golub_clean_aug %>% 
+  filter(type == 0) %>% 
+  select(-c(value,type)) 
+
+avg_ALL <- ALL %>% 
+  colMeans() %>% 
+  as_tibble() %>% 
+  mutate(gene_names = colnames(ALL)) %>% 
+  arrange(desc(value))
+
+AML <- golub_clean_aug %>% 
+  filter(type == 1)
+
+avg_AML <- AML %>% 
+  colMeans() %>% 
+  as_tibble() %>% 
+  mutate(gene_names = colnames(AML)) %>% 
+  arrange(desc(value))
+
+'''
 # sample 100 random genes
 set.seed(928488)
 golub_data_long_nested <- 
   golub_data_long_nested %>% 
   sample_n(100)
+'''
+
 
 # Statistics ------------------------------------------------------------
 
@@ -33,6 +58,8 @@ golub_expr_data_long_nested = golub_data_long_nested %>%
   mutate(mdl = map(data, ~glm(type ~ norm_expr_level,
                               data = .x,
                               family = binomial(link = "logit"))))
+
+
 
 # add model information
 golub_expr_data_long_nested = golub_expr_data_long_nested %>%
