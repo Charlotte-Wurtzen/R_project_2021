@@ -14,7 +14,7 @@ golub_clean_aug <- read_tsv(file = "data/03_golub_clean_aug.tsv.gz")
 # Wrangle data ------------------------------------------------------------
 
 # pivot longer
-golub_data_long <- longer(golub_clean_aug)
+golub_data_long <- longer(golub_clean_aug) 
 
 # sample 100 genes randomly
 set.seed(12345)
@@ -25,9 +25,10 @@ golub_data_long <-
 
 # Visualise data ----------------------------------------------------------
 golub_data_long %>% 
-  arrange(desc(norm_expr_level)) %>% 
+  #arrange(desc(norm_expr_level)) %>% 
+  #head() %>% 
   
-  ggplot(mapping = aes(x = type,y = gene, fill = norm_expr_level)) +
+  ggplot(mapping = aes(x = rownames(golub_data_long),y = gene, fill = norm_expr_level)) +
   geom_tile() +
   
   theme_classic(base_size = 12) +
@@ -43,3 +44,33 @@ golub_data_long %>%
   theme(axis.text.x = element_blank()) 
 
 ggsave(filename = "results/04_heatmap.png", width = 16, height = 9, dpi = 72)
+<<<<<<< HEAD
+=======
+
+
+
+
+
+
+'''
+golub_clean_aug %>% 
+  #sample_n(100) %>% 
+  
+  ggplot(mapping = aes(x = rownames(golub_clean_aug),y = colnames(golub_clean_aug), fill = values)) +
+  geom_tile() +
+  
+  theme_classic(base_size = 12) +
+  ggtitle("Normalized gene expression levels distinguishing ALL and AML") + 
+  scale_fill_gradient2(low = "blue", high = "red", mid = "white",midpoint = 2) +
+  xlab(label = "Type") + 
+  ylab(label = "Genes") + 
+  labs(fill = "Normalized expression level") +
+  theme(legend.position="bottom") +
+  
+  # facet_grid makes two panels, one for ALL, one for AML:
+  facet_grid(~ type, switch = "x", scales = "free_x", space = "free_x") + 
+  theme(axis.text.x = element_blank()) 
+'''
+
+
+>>>>>>> 92d37ee0ff544a1f0fa9ed094f4b0cdfcd95cf9a
