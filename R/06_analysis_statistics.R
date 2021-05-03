@@ -42,11 +42,14 @@ avg_AML <- AML %>%
   mutate(gene_names = colnames(AML)) %>% 
   arrange(desc(value))
 
+'''
 # sample 100 random genes
 set.seed(928488)
 golub_data_long_nested <- 
   golub_data_long_nested %>% 
   sample_n(100)
+'''
+
 
 # Statistics ------------------------------------------------------------
 
@@ -55,6 +58,8 @@ golub_expr_data_long_nested = golub_data_long_nested %>%
   mutate(mdl = map(data, ~glm(type ~ norm_expr_level,
                               data = .x,
                               family = binomial(link = "logit"))))
+
+
 
 # add model information
 golub_expr_data_long_nested = golub_expr_data_long_nested %>%
