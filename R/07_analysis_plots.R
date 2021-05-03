@@ -23,19 +23,15 @@ top_genes_avg <- top_genes %>%
   summarise(avg_norm_expr_level = mean(norm_expr_level))
 
 # separate top gene data on cancer type and find average
-ALL_top <- top_genes%>% 
+avg_ALL_top <- top_genes%>% 
   filter(type == 0) %>% 
-  select(-c(type)) 
-
-avg_ALL_top <- ALL_top %>% 
+  select(-c(type)) %>% 
   group_by(gene) %>% 
   summarise(avg_norm_expr_level = mean(norm_expr_level))
 
-AML_top <- top_genes %>% 
+avg_AML_top <- top_genes %>% 
   filter(type == 1) %>% 
-  select(-c(type))
-
-avg_AML_top <- AML_top %>% 
+  select(-c(type)) %>% 
   group_by(gene) %>% 
   summarise(avg_norm_expr_level = mean(norm_expr_level))
 
@@ -80,12 +76,17 @@ histogram2 <- g1 + g2
 
 # Box plot ------------------------------------------------------------
 # this need to be fixed
-boxplot <- golub_data_long %>%
-  ggplot(mapping = aes(x = type, y = norm_expr_level , fill=type)) +
+boxplot_ALL <- avg_ALL_top %>% 
+  ggplot(mapping = aes( y = avg_norm_expr_level )) +
   geom_boxplot(alpha = 0.5) +
   theme_classic()
+  
+boxplot_AML <- avg_AML_top %>% 
+  ggplot(mapping = aes(y = avg_norm_expr_level )) +
+    geom_boxplot(alpha = 0.5) +
+    theme_classic()
 
-boxplot
+boxplot_ALL+boxplot_AML
 
 # Scatter plot ------------------------------------------------------------
 scatter_plot <- 
