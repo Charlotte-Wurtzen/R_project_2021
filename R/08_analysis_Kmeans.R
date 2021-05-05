@@ -3,6 +3,7 @@ rm(list = ls())
 
 # Load libraries ----------------------------------------------------------
 library("tidymodels")
+library("patchwork")
 
 # Define functions --------------------------------------------------------
 source(file = "R/99_project_functions.R")
@@ -37,17 +38,19 @@ pca_aug_k_type_pca <- k_pca %>%
 pca_aug_k_type_pca
 
 # plot type + clustering based on type and pca 
-pca_aug %>% 
-  ggplot(aes(x = .fittedPC1, y = .fittedPC2, colour = type)) +
+p1 <- pca_aug %>% 
+  ggplot(aes(x = .fittedPC1, y = .fittedPC2, colour = factor(type))) +
   geom_point() +
   theme(legend.position = "bottom")
 
-pca_aug_k_type_pca %>%
+p2 <- pca_aug_k_type_pca %>%
   ggplot(aes(x = .fittedPC1, y = .fittedPC2, colour = cluster_type)) +
   geom_point() +
   theme(legend.position = "bottom")
 
-pca_aug_k_type_pca %>%
+p3 <- pca_aug_k_type_pca %>%
   ggplot(aes(x = .fittedPC1, y = .fittedPC2, colour = cluster_pca)) +
   geom_point() +
   theme(legend.position = "bottom")
+
+p1 + p2 + p3
