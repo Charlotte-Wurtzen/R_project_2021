@@ -77,13 +77,15 @@ histogram2 <- g1 + g2
 # Box plot ------------------------------------------------------------
 # this need to be fixed
 boxplot_ALL <- avg_ALL_top %>% 
-  ggplot(mapping = aes( y = avg_norm_expr_level )) +
+  ggplot(mapping = aes( y = avg_norm_expr_level, col = avg_norm_expr_level)) +
   geom_boxplot(alpha = 0.5) +
+  labs(title = "ALL") + 
   theme_classic()
   
 boxplot_AML <- avg_AML_top %>% 
-  ggplot(mapping = aes(y = avg_norm_expr_level )) +
+  ggplot(mapping = aes(y = avg_norm_expr_level, col = avg_norm_expr_level)) +
     geom_boxplot(alpha = 0.5) +
+  labs(title = "AML") + 
     theme_classic()
 
 boxplot_ALL+boxplot_AML
