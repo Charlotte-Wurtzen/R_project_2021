@@ -15,14 +15,14 @@ golub_top_genes <- read_tsv(file = "data/04_top_genes.tsv.gz")
 
 # Wrangle data ------------------------------------------------------------
 
-# pivot wider and add patient id
+# make data wider and add patient id
 golub_top_genes_wide <- golub_top_genes %>% 
   pivot_wider(names_from = gene,values_from = norm_expr_level) %>% 
   unnest() %>% 
   mutate(id = row_number()) %>% 
   relocate(id)
 
-# pivot longer
+# make data long
 golub_top_genes_long <- golub_top_genes_wide %>% 
   pivot_longer(cols = -c(id,type),
                names_to = "gene", 
@@ -31,8 +31,7 @@ golub_top_genes_long <- golub_top_genes_wide %>%
 
 
 # Visualise data ----------------------------------------------------------
-golub_top_genes_long %>% 
-  
+plot1 <- golub_top_genes_long %>% 
   ggplot(mapping = aes(x = id, y = gene, fill = norm_expr_level)) +
   geom_tile() +
   
@@ -44,12 +43,12 @@ golub_top_genes_long %>%
   labs(fill = "Normalized expression level") +
   theme(legend.position="bottom") +
   
-  # facet_grid makes two panels, one for ALL, one for AML:
+  # make two panels, one for each cancer type
   facet_grid(~ type, switch = "x", scales = "free_x", space = "free_x")  
 
 
 # save plot ----------------------------------------------------------
-ggsave(filename = "results/06_heatmap.png", width = 16, height = 9, dpi = 72)
+ggsave(filename = "results/06_heatmap.png", width = 16, height = 9, dpi = 72, plot = plot1)
 
 
 

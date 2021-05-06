@@ -22,18 +22,31 @@ top_genes_avg <- top_genes %>%
   group_by(gene) %>% 
   summarise(avg_norm_expr_level = mean(norm_expr_level))
 
+
 # separate top gene data on cancer type and find average
 avg_ALL_top <- top_genes%>% 
   filter(type == 0) %>% 
   select(-c(type)) %>% 
   group_by(gene) %>% 
-  summarise(avg_norm_expr_level = mean(norm_expr_level))
+  summarise(avg_norm_expr_level = mean(norm_expr_level)) 
 
 avg_AML_top <- top_genes %>% 
   filter(type == 1) %>% 
   select(-c(type)) %>% 
   group_by(gene) %>% 
   summarise(avg_norm_expr_level = mean(norm_expr_level))
+
+
+# take out the gene name with the highest expression level
+top1_avg_ALL <- avg_ALL_top %>% 
+  arrange(desc(avg_norm_expr_level)) %>%
+  head(n=1L) %>% 
+  pull(gene)
+
+top1_avg_AML <- avg_AML_top %>% 
+  arrange(desc(avg_norm_expr_level)) %>%
+  head(n=1L) %>% 
+  pull(gene)
 
 
 # Histograms ----------------------------------------------------------------
@@ -76,19 +89,24 @@ histogram2 <- g1 + g2
 
 # Box plot ------------------------------------------------------------
 # this need to be fixed
-boxplot_ALL <- avg_ALL_top %>% 
-  ggplot(mapping = aes( y = avg_norm_expr_level, col = avg_norm_expr_level)) +
-  geom_boxplot(alpha = 0.5) +
-  labs(title = "ALL") + 
-  theme_classic()
-  
-boxplot_AML <- avg_AML_top %>% 
-  ggplot(mapping = aes(y = avg_norm_expr_level, col = avg_norm_expr_level)) +
-    geom_boxplot(alpha = 0.5) +
-  labs(title = "AML") + 
-    theme_classic()
+boxplot_ALL_topgene <- top_genes %>% 
+  filter(gene == top1_avg_ALL) %>% 
+  ggplot(mapping = aes(y = norm_expr_level, fill = factor(type))) +
+  geom_boxplot(alpha=0.5) +
+  facet_wrap(~type, strip.position = "bottom", scales = "free_x")+
+  labs(title = "gene Y00433_at" ) +
+  theme(axis.text.x=element_blank())
+boxplot_ALL_topgene
 
-boxplot_ALL+boxplot_AML
+boxplot_AML_topgene <- top_genes %>% 
+  filter(gene == top1_avg_AML) %>% 
+  ggplot(mapping = aes(y = norm_expr_level, fill = factor(type))) +
+  geom_boxplot(alpha=0.5) +
+  facet_wrap(~type, strip.position = "bottom", scales = "free_x") +
+  labs(title = "gene M11147_at" ) +
+  theme(axis.text.x=element_blank())
+boxplot_AML_topgene
+
 
 # Scatter plot ------------------------------------------------------------
 scatter_plot <- 
