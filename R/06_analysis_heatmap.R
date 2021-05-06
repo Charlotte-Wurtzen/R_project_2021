@@ -13,38 +13,29 @@ source(file = "R/99_project_functions.R")
 golub_top_genes <- read_tsv(file = "data/04_top_genes.tsv.gz")
 
 
-# Wrangle data ------------------------------------------------------------
-
-# make data wider and add patient id
-golub_top_genes_wide <- golub_top_genes %>% 
-  pivot_wider(names_from = gene,values_from = norm_expr_level) %>% 
-  unnest() %>% 
-  mutate(id = row_number()) %>% 
-  relocate(id)
-
-# make data long
-golub_top_genes_long <- golub_top_genes_wide %>% 
-  pivot_longer(cols = -c(id,type),
-               names_to = "gene", 
-               values_to = "norm_expr_level") 
-  
-
-
 # Visualise data ----------------------------------------------------------
-plot1 <- golub_top_genes_long %>% 
-  ggplot(mapping = aes(x = id, y = gene, fill = norm_expr_level)) +
+plot1 <- golub_top_genes %>% 
+  mutate(type = case_when(type == 0 ~ "ALL",
+            type == 1 ~ "AML")) %>% 
+  ggplot(mapping = aes(x = id, 
+                       y = gene, 
+                       fill = norm_expr_level)) +
   geom_tile() +
-  
   theme_classic(base_size = 12) +
   ggtitle("Normalized gene expression levels distinguishing ALL and AML") + 
-  scale_fill_gradient2(low = "blue", high = "red", mid = "white",midpoint = 2) +
-  xlab(label = "Patient id") + 
+  scale_fill_gradient2(low = "blue", 
+                       high = "red", 
+                       mid = "white",
+                       midpoint = 2) +
+  xlab(label = "Patient ID") + 
   ylab(label = "Genes") + 
-  labs(fill = "Normalized expression level") +
+  labs(fill = "Normalized expression level",
+       caption = "Data from Golub et al. (1999)") +
   theme(legend.position="bottom") +
-  
-  # make two panels, one for each cancer type
-  facet_grid(~ type, switch = "x", scales = "free_x", space = "free_x")  
+  facet_grid(~ type, 
+             switch = "x", 
+             scales = "free_x", 
+             space = "free_x")  
 
 
 # save plot ----------------------------------------------------------

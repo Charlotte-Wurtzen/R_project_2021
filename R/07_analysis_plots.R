@@ -4,40 +4,42 @@ rm(list = ls())
 
 # Load libraries ----------------------------------------------------------
 library("tidyverse")
-library("patchwork")
+#library("patchwork")
+
 
 # Load data ---------------------------------------------------------------
 golub_clean_aug <- read_tsv(file = "data/03_golub_clean_aug.tsv.gz")
 top_genes <- read_tsv(file = "data/04_top_genes.tsv.gz")
 
+
 # Define functions --------------------------------------------------------
 source(file = "R/99_project_functions.R")
 
+
 # Wrangle data ------------------------------------------------------------
-# pivot longer 
+
+# Pivot longer 
 golub_data_long <- longer(golub_clean_aug)
 
-# average of top gene data
+# Average of top gene data
 top_genes_avg <- top_genes %>% 
   group_by(gene) %>% 
   summarise(avg_norm_expr_level = mean(norm_expr_level))
 
-
-# separate top gene data on cancer type and find average
-avg_ALL_top <- top_genes%>% 
+# Separate top gene data on cancer type and find average
+avg_ALL_top <- top_genes %>% 
   filter(type == 0) %>% 
-  select(-c(type)) %>% 
+  select(-c(type, id)) %>% 
   group_by(gene) %>% 
   summarise(avg_norm_expr_level = mean(norm_expr_level)) 
 
 avg_AML_top <- top_genes %>% 
   filter(type == 1) %>% 
-  select(-c(type)) %>% 
+  select(-c(type, id)) %>% 
   group_by(gene) %>% 
   summarise(avg_norm_expr_level = mean(norm_expr_level))
 
-
-# take out the gene name with the highest expression level
+# Take out the gene name with the highest expression level
 top1_avg_ALL <- avg_ALL_top %>% 
   arrange(desc(avg_norm_expr_level)) %>%
   head(n=1L) %>% 
@@ -50,19 +52,35 @@ top1_avg_AML <- avg_AML_top %>%
 
 
 # Histograms ----------------------------------------------------------------
-# histogram showing how many measurements of each type 
-# add some legends etc here
-histogram1 <- 
-  golub_data_long %>% 
+
+# Histogram showing how many measurements of each type 
+histogram1 <- golub_clean_aug %>%
+  mutate(type = case_when(type == 0 ~ "ALL",
+                          type == 1 ~ "AML")) %>% 
   count(type) %>% 
-  ggplot(aes(x= type, y=n, fill= type))+
-  geom_col()+
-  xlab(label="Types ( 0 = ALL, 1 = AML )") +
-  ylab(label= "Number of genes measured")
+  ggplot(aes(x = type, y = n, fill = factor(type))) +
+  geom_col(alpha = 0.8) +
+  labs(title = "Number of patients with each cancer type",
+       caption = "Data from Golub et al. (1999)",
+       fill = "Cancer type") +
+  ylab(label= "Number of patients") +
+  theme_minimal_grid(12) +
+  theme(legend.position = "right",
+        axis.title.x = element_blank()) +   
+  scale_x_discrete(breaks = NULL)
 
+# Histogram showing expression of top genes divided into type
 
-# histogram showing expression of top genes divided into type
-# add nice colours
+## => kig på plot her
+'''
+avg_ALL_top %>% 
+  right_join(avg_AML_top, by = "gene") %>%
+  rename(avg_expr_ALL = avg_norm_expr_level.x,
+         avg_expr_AML = avg_norm_expr_level.y) %>% 
+  
+  ggplot(mapping = aes(x = ))
+'''
+
 g1 <- avg_ALL_top %>%
   ggplot(mapping = aes(x =avg_norm_expr_level, y = gene)) + 
   geom_bar(stat = "identity") + 
@@ -72,7 +90,7 @@ g1 <- avg_ALL_top %>%
   xlab(NULL) + 
   ylab(label="Genes") +
   theme_classic()
-
+g1
 
 g2 <- avg_AML_top %>%
   ggplot(mapping = aes(x = avg_norm_expr_level, y = gene)) + 
@@ -85,7 +103,8 @@ g2 <- avg_AML_top %>%
   theme_classic()
  
 
-histogram2 <- g1 + g2 
+histogram2 <- g1 / g2 
+histogram2
 
 # Box plot ------------------------------------------------------------
 # this need to be fixed
