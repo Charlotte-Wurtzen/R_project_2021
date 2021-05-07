@@ -1,0 +1,42 @@
+---
+title: "Leukemia"
+output: ioslides_presentation
+author: Emma Ahrensbach Rørbeck (s173733), Julie Maria Johansen (s174595), Simone Majken Stegenborg-Grathwohl (s174596) and Charlotte Würtzen (s174564)
+--- 
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+## Introduction
+
+- Leukemia data set
+- why interesting
+
+# Materials & Methods
+
+## Tidyverse
+
+- Bullet 1
+- Bullet 2
+- Bullet 3
+
+# Results 
+
+```{r cars, echo = TRUE}
+summary(cars)
+```
+
+## Slide with Plot
+
+```{r pressure}
+plot(pressure)
+```
+
+
+# Discussion
+
+
+
+
+
