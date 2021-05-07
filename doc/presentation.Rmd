@@ -6,36 +6,63 @@ author: Emma Ahrensbach Rørbeck (s173733), Julie Maria Johansen (s174595), Simo
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE)
+library("tidyverse")
+load(file = "../data/_raw/golub.RData")
 ```
+
 
 ## Introduction
 
 - Leukemia data set
 - why interesting
 
-# Materials & Methods
+# Methods
 
-## Tidyverse
+## Data wrangling
+- Tidyverse
+- pluck x and y from golub data and make into tibbles
+- bind_cols
 
-- Bullet 1
-- Bullet 2
-- Bullet 3
+```{r, echo = TRUE}
+x_data <- golub %>% 
+  pluck("x") %>% 
+  as_tibble()
+```
+
+- show snip of data before pivot_longer
+- main functions: pivot_longer, mutate
+- add id and type
+
+## Modelling
+
+- logistic regression => statistics (~tidy function)
+- finding significant genes
+
+- PCA
+- K-means
+
 
 # Results 
 
-```{r cars, echo = TRUE}
-summary(cars)
-```
-
-## Slide with Plot
-
-```{r pressure}
-plot(pressure)
-```
+## histogram
+## heatmap
+## bar plot
+## boxplot
+## (scatterplot)
 
 
 # Discussion
 
+- important to distinguish which genes are important/significant
+- missing reference/control group to compare with healthy individuals
+- data set possibly more suitable for neural network analysis => prediction of cancer type
+- PCA and K-means not relevant for this data? 
+dimensionality reduction not ideal when variance explained is so low for each PC
+Not clear cluster differentiation
+
+## Conclusion
+
+- sum up
 
 
 
