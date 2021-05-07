@@ -71,15 +71,25 @@ histogram1 <- golub_clean_aug %>%
 
 # Histogram showing expression of top genes divided into type
 
-## => kig på plot her
-'''
+
 avg_ALL_top %>% 
   right_join(avg_AML_top, by = "gene") %>%
-  rename(avg_expr_ALL = avg_norm_expr_level.x,
-         avg_expr_AML = avg_norm_expr_level.y) %>% 
+  rename(ALL = avg_norm_expr_level.x,
+         AML = avg_norm_expr_level.y) %>% 
+  sample_n(25) %>% 
+  pivot_longer(cols = -gene,
+               names_to = "Type",
+               values_to = "avg_expr") %>% 
   
-  ggplot(mapping = aes(x = ))
-'''
+  ggplot(mapping = aes(x = avg_expr, y = gene, fill = Type)) +
+  geom_col(position = "dodge") +
+  theme_bw(base_size = 8) +
+  theme(plot.title = element_text(hjust = 0.5)) + 
+  labs(title = "Average gene expression according to cancer type",
+       subtitle = "25 random significant genes") + 
+  xlab(label = "Average gene expression") + 
+  ylab(label="Genes")
+
 
 g1 <- avg_ALL_top %>%
   ggplot(mapping = aes(x =avg_norm_expr_level, y = gene)) + 
