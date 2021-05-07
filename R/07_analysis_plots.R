@@ -97,7 +97,7 @@ boxplot_ALL_topgene <- top_genes %>%
                           type == 1 ~ "AML")) %>% 
   ggplot(mapping = aes(y = norm_expr_level, fill = factor(type))) +
   geom_boxplot(alpha=0.5) +
-  facet_wrap(~type, 
+  facet_wrap(vars(type), 
              strip.position = "bottom", 
              scales = "free_x")+
   labs(title = str_c("Boxplots of expression levels of gene",top1_avg_ALL,sep = " "),
@@ -115,7 +115,7 @@ boxplot_AML_topgene <- top_genes %>%
   ggplot(mapping = aes(y = norm_expr_level, 
                        fill = factor(type))) +
   geom_boxplot(alpha=0.5) +
-  facet_wrap(~type, 
+  facet_wrap(vars(type), 
              strip.position = "bottom", 
              scales = "free_x")+
   labs(title = str_c("Boxplots of expression levels of gene",top1_avg_AML,sep = " "),
