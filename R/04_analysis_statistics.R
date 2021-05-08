@@ -62,33 +62,6 @@ top_genes <- significant_genes %>%
   unnest(data) %>% 
   select(c(id, gene, type, norm_expr_level))
 
-# Separate top genes based on cancer type 
-ALL <- top_genes %>% 
-  pivot_wider(names_from = "gene", values_from = "norm_expr_level") %>% 
-  filter(type == 0) %>% 
-  select(-c(type, id)) 
-
-avg_ALL <- ALL %>% 
-  colMeans() %>% 
-  as_tibble() %>% 
-  mutate(gene_names = colnames(ALL)) %>% 
-  arrange(desc(value))
-
-AML <- top_genes %>% 
-  pivot_wider(names_from = "gene", values_from = "norm_expr_level") %>% 
-  filter(type == 1) %>% 
-  select(-c(type, id))
-
-avg_AML <- AML %>% 
-  colMeans() %>% 
-  as_tibble() %>% 
-  mutate(gene_names = colnames(AML)) %>% 
-  arrange(desc(value))
-
 
 # Write data --------------------------------------------------------------
 write_tsv(x = top_genes, file = "data/04_top_genes.tsv.gz")
-
-write_tsv(x = avg_ALL, file = "data/04_avg_ALL.tsv.gz")
-
-write_tsv(x = avg_AML, file = "data/04_avg_AML.tsv.gz")
