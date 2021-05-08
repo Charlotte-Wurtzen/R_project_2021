@@ -24,6 +24,7 @@ top_gene_names = top_genes %>%
 
 plot_options = c("Boxplot", "Histogram", "Scatterplot")
 
+
 # APP: UI----- ------------------------------------------------------------
 ui <- fluidPage(theme = shinytheme("cerulean"),
     titlePanel("The Golub Data Set: Most Significant Leukemia Genes"),
@@ -39,7 +40,7 @@ ui <- fluidPage(theme = shinytheme("cerulean"),
 )
 
 
-# APP: Server ------------------------------------------------------------
+# APP: Server -------------------------------------------------------------
 server <- function(input, output) {
     data <- reactive(top_genes %>% 
                          filter(gene == input$gene) %>% 
@@ -105,5 +106,6 @@ server <- function(input, output) {
     })
 }
 
-# Run the Application ---------------------------------------------------- 
+
+# Run the Application -----------------------------------------------------
 shinyApp(ui = ui, server = server)
