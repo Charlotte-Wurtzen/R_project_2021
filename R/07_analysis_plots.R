@@ -128,19 +128,19 @@ boxplot_AML_topgene <- top_genes %>%
 
 # Scatter plot 
 scatter_plot <- top_genes_avg %>% 
-  ggplot(mapping = aes(x =gene, 
+  ggplot(mapping = aes(x = gene, 
                        y = avg_norm_expr_level, 
                        colour = avg_norm_expr_level)) +
   geom_point() + 
-  scale_color_gradient(low="blue", high="red")+
-  theme_minimal()+
-  ylab(label="Normalized Expression Level") +
-  xlab(label="Gene") +
+  scale_color_gradient(low = "blue", high = "red") +
+  theme_minimal() +
+  ylab(label = "Normalized Expression Level") +
+  xlab(label = "Gene") +
   labs(title = "Expression level shown for each of the top 1% significant genes", 
        caption = "Data from Golub et al. (1999)",
-       color = "Expression")+
-theme(legend.position = 'bottom', 
-      axis.text.x = element_text(angle = 45, hjust=1))
+       color = "Expression") +
+  theme(legend.position = 'bottom', 
+        axis.text.x = element_text(angle = 45, hjust=1))
 
 
 # Write data --------------------------------------------------------------
