@@ -179,68 +179,49 @@ include_graphics("../results/05_kmeans_plot.png")
 ```
 ></center>
 
-
+{.columns-2 .smaller}
+<p class="forceBreak"></p>
 
 # Results 
 
-## Bar plot of cancer type count {.columns-2 .smaller}
-```{r, include = FALSE}
-# Pivot longer 
-golub_data_long <- longer(golub_clean_aug)
-
-# Average of top gene data
-top_genes_avg <- top_genes %>% 
-  group_by(gene) %>% 
-  summarise(avg_norm_expr_level = mean(norm_expr_level))
-
-# Separate top gene data on cancer type and find average
-avg_ALL_top <- top_genes %>% 
-  filter(type == 0) %>% 
-  select(-c(type, id)) %>% 
-  group_by(gene) %>% 
-  summarise(avg_norm_expr_level = mean(norm_expr_level)) 
-
-avg_AML_top <- top_genes %>% 
-  filter(type == 1) %>% 
-  select(-c(type, id)) %>% 
-  group_by(gene) %>% 
-  summarise(avg_norm_expr_level = mean(norm_expr_level))
-
-# Take out the gene name with the highest expression level
-top1_avg_ALL <- avg_ALL_top %>% 
-  arrange(desc(avg_norm_expr_level)) %>%
-  head(n=1L) %>% 
-  pull(gene)
-
-top1_avg_AML <- avg_AML_top %>% 
-  arrange(desc(avg_norm_expr_level)) %>%
-  head(n=1L) %>% 
-  pull(gene)
-
-```
-
-```{r, echo = TRUE, message = FALSE}
-histogram <- golub_clean_aug %>%
-  mutate(type = case_when(type == 0 ~ "ALL",
-                          type == 1 ~ "AML")) %>% 
-  count(type) %>% 
-  ggplot(aes(x = type, y = n, fill = factor(type))) +
-  geom_col(alpha = 0.8) +
-  labs(title = "Number of patients with each cancer type",
-       caption = "Data from Golub et al. (1999)",
-       fill = "Cancer type") +
-  ylab(label= "Number of patients") +
-   theme_minimal_grid(12) +
-  theme(legend.position = "right",
-        axis.title.x = element_blank()) +   
-  scale_x_discrete(breaks = NULL)
-```
-<p class="forceBreak"></p>
+## Bar plot of cancer type count 
 ```{r bar count, out.width = "100%", fig.height = 8, echo = FALSE}
 include_graphics("../results/07_barcount.png")
 ```
 
-## Heatmap 
+## Visualising gene expression levels with heatmap
+
+### Building the code
+```{r, echo = TRUE, message = FALSE, eval = FALSE}
+heatmap <- golub_top_genes %>% 
+  mutate(type = case_when(type == 0 ~ "ALL",
+            type == 1 ~ "AML")) %>% 
+  ggplot(mapping = aes(x = id, 
+                       y = gene, 
+                       fill = norm_expr_level)) +
+  geom_tile() +
+  theme_classic(base_size = 12) +
+  ggtitle("Normalized gene expression levels distinguishing ALL and AML") + 
+  scale_fill_gradient2(low = "blue", 
+                       high = "red", 
+                       mid = "white",
+                       midpoint = 2) +
+  xlab(label = "Patient ID") + 
+  ylab(label = "Genes") + 
+  labs(fill = "Normalized expression level",
+       caption = "Data from Golub et al. (1999)") +
+  theme(legend.position="bottom",
+        plot.title = element_text(size = rel(1.7)),
+        axis.title.y = element_text(size = rel(1.4)),
+        axis.title.x = element_text(size = rel(1.4))) +
+  facet_grid(~type, 
+             switch = "x", 
+             scales = "free_x", 
+             space = "free_x")
+```
+
+
+##
 ```{r heatmap, out.width = "100%", fig.height = 8, echo = FALSE}
 include_graphics("../results/06_heatmap.png")
 ```
@@ -252,6 +233,9 @@ include_graphics("../results/07_barplot.png")
 
 ## Boxplots {.columns-2 .smaller}
 
+- bla bla
+- kfena
+
 ```{r boxplot ALL, out.width = "100%", fig.height = 8, echo = FALSE}
 include_graphics("../results/07_boxplot_ALL.png")
 ```
@@ -259,6 +243,7 @@ include_graphics("../results/07_boxplot_ALL.png")
 ```{r boxplot AML, out.width = "100%", fig.height = 8, echo = FALSE}
 include_graphics("../results/07_boxplot_AML.png")
 ```
+
 
 # Discussion
 

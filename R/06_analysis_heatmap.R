@@ -31,7 +31,10 @@ plot1 <- golub_top_genes %>%
   ylab(label = "Genes") + 
   labs(fill = "Normalized expression level",
        caption = "Data from Golub et al. (1999)") +
-  theme(legend.position="bottom") +
+  theme(legend.position="bottom",
+        plot.title = element_text(size = rel(1.7)),
+        axis.title.y = element_text(size = rel(1.4)),
+        axis.title.x = element_text(size = rel(1.4))) +
   facet_grid(~type, 
              switch = "x", 
              scales = "free_x", 
