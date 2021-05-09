@@ -27,7 +27,7 @@ plot_options = c("Boxplot", "Histogram", "Scatterplot")
 
 # APP: UI----- ------------------------------------------------------------
 ui <- fluidPage(theme = shinytheme("cerulean"),
-    titlePanel("The Golub Data Set: Most Significant Leukemia Genes"),
+    titlePanel("The Golub Data Set: Normalized expression of genes deemed most significant with regards to leukemia"),
     sidebarLayout(
         sidebarPanel(
             selectInput("gene", "Choose your desired gene", top_gene_names),
