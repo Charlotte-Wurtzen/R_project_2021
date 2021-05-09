@@ -17,9 +17,14 @@ source(file = "R/99_project_functions.R")
 
 # Wrangle data ------------------------------------------------------------
 
-# Pivot longer 
-golub_data_long <- longer(golub_clean_aug)
-
+# Define top 25 significant genes
+top_25_genes <- top_genes %>% 
+  group_by(gene) %>% 
+  nest() %>% 
+  head(n = 25L) %>% 
+  select(gene)
+  
+  
 # Average of top gene data
 top_genes_avg <- top_genes %>% 
   group_by(gene) %>% 
@@ -53,7 +58,7 @@ top1_avg_AML <- avg_AML_top %>%
 # Visualisations ----------------------------------------------------------------
 
 # Histogram showing how many measurements of each type 
-histogram <- golub_clean_aug %>%
+bar_count <- golub_clean_aug %>%
   mutate(type = case_when(type == 0 ~ "ALL",
                           type == 1 ~ "AML")) %>% 
   count(type) %>% 
@@ -73,20 +78,20 @@ bar_plot <- avg_ALL_top %>%
   right_join(avg_AML_top, by = "gene") %>%
   rename(ALL = avg_norm_expr_level.x,
          AML = avg_norm_expr_level.y) %>% 
-  sample_n(25) %>% 
+  filter(gene %in% pull(top_25_genes)) %>% 
+  
   pivot_longer(cols = -gene,
                names_to = "Type",
                values_to = "avg_expr") %>% 
   
   ggplot(mapping = aes(x = avg_expr, y = gene, fill = Type)) +
   geom_col(position = "dodge") +
-  theme_bw(base_size = 8) +
-  theme(plot.title = element_text(hjust = 0.5)) + 
+  theme_bw(base_size = 8) + 
   labs(title = "Average gene expression according to cancer type",
-       subtitle = "25 random significant genes.",
+       subtitle = "25 most significant genes.",
        caption = "Data from Golub et al. (1999)") + 
   xlab(label = "Average gene expression") + 
-  ylab(label="Genes")
+  ylab(label = "Genes")
 
 
 # Box plots of top average genes
@@ -126,27 +131,9 @@ boxplot_AML_topgene <- top_genes %>%
         legend.position = "none")
 
 
-# Scatter plot 
-scatter_plot <- top_genes_avg %>% 
-  ggplot(mapping = aes(x = gene, 
-                       y = avg_norm_expr_level, 
-                       colour = avg_norm_expr_level)) +
-  geom_point() + 
-  scale_color_gradient(low = "blue", high = "red") +
-  theme_minimal() +
-  ylab(label = "Normalized Expression Level") +
-  xlab(label = "Gene") +
-  labs(title = "Expression level shown for each of the top 1% significant genes", 
-       caption = "Data from Golub et al. (1999)",
-       color = "Expression") +
-  theme(legend.position = 'bottom', 
-        axis.text.x = element_text(angle = 45, hjust=1))
-
-
 # Write data --------------------------------------------------------------
-ggsave("results/07_histogram.png", plot = histogram)
+ggsave("results/07_barcount.png", plot = bar_count)
 ggsave("results/07_barplot.png", plot = bar_plot)
 ggsave("results/07_boxplot_ALL.png", plot = boxplot_ALL_topgene)
 ggsave("results/07_boxplot_AML.png", plot = boxplot_AML_topgene)
-ggsave("results/07_scatter_plot.png", plot = scatter_plot)
 
