@@ -182,6 +182,49 @@ slide:not(.current) .plotly.html-widget{
 
 </article></slide><slide class="segue dark nobackground level1"><hgroup class = 'auto-fadein'><h2>Methods</h2></hgroup><article  id="methods">
 
+<<<<<<< HEAD
+</article></slide><slide class=""><hgroup><h2>Data wrangling</h2></hgroup><article  id="data-wrangling">
+
+<ul>
+<li>Tidyverse</li>
+<li>pluck x and y from golub data and make into tibbles</li>
+<li>bind_cols</li>
+</ul>
+
+<pre class = 'prettyprint lang-r'>x_data &lt;- golub %&gt;% 
+  pluck(&quot;x&quot;) %&gt;% 
+  as_tibble()</pre>
+
+<ul>
+<li>show snip of data before pivot_longer</li>
+<li>main functions: pivot_longer, mutate</li>
+<li>add id and type</li>
+</ul>
+
+</article></slide><slide class=""><hgroup><h2>Modelling</h2></hgroup><article  id="modelling">
+
+<ul>
+<li><p>logistic regression =&gt; statistics (~tidy function)</p></li>
+<li><p>finding significant genes</p></li>
+<li><p>PCA</p></li>
+<li><p>K-means</p></li>
+</ul>
+
+</article></slide><slide class="segue dark nobackground level1"><hgroup class = 'auto-fadein'><h2>Results</h2></hgroup><article  id="results">
+
+</article></slide><slide class=""><hgroup><h2>histogram</h2></hgroup><article  id="histogram">
+
+</article></slide><slide class=""><hgroup><h2>heatmap</h2></hgroup><article  id="heatmap">
+
+</article></slide><slide class=""><hgroup><h2>bar plot</h2></hgroup><article  id="bar-plot">
+
+</article></slide><slide class=""><hgroup><h2>boxplot</h2></hgroup><article  id="boxplot">
+
+</article></slide><slide class=""><hgroup><h2>(scatterplot)</h2></hgroup><article  id="scatterplot">
+
+</article></slide><slide class="segue dark nobackground level1"><hgroup class = 'auto-fadein'><h2>Discussion</h2></hgroup><article  id="discussion">
+
+=======
 </article></slide><slide class=""><hgroup><h2>Data wrangling</h2></hgroup><article  id="data-wrangling" class="smaller">
 
 <pre class = 'prettyprint lang-r'>x_data &lt;- golub %&gt;% 
@@ -324,6 +367,7 @@ k_type &lt;- golub_clean_aug %&gt;%
 
 </article></slide><slide class="segue dark nobackground level1"><hgroup class = 'auto-fadein'><h2>Discussion</h2></hgroup><article  id="discussion">
 
+>>>>>>> 1ffc3e3a05d883ce1c557f740831902784583934
 <ul>
 <li>important to distinguish which genes are important/significant</li>
 <li>missing reference/control group to compare with healthy individuals</li>
