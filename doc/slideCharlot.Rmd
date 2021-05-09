@@ -179,9 +179,11 @@ include_graphics("../results/05_kmeans_plot.png")
 ```
 ></center>
 
+
+
 # Results 
 
-## histogram {.columns-2 .smaller}
+## Bar plot of cancer type count {.columns-2 .smaller}
 ```{r, include = FALSE}
 # Pivot longer 
 golub_data_long <- longer(golub_clean_aug)
@@ -235,20 +237,20 @@ histogram <- golub_clean_aug %>%
 ```
 <p class="forceBreak"></p>
 ```{r bar count, out.width = "100%", fig.height = 8, echo = FALSE}
-include_graphics("../results/07_histogram.png")
+include_graphics("../results/07_barcount.png")
 ```
 
-## heatmap
+## Heatmap 
 ```{r heatmap, out.width = "100%", fig.height = 8, echo = FALSE}
 include_graphics("../results/06_heatmap.png")
 ```
-## bar plot
 
+## Bar plot
 ```{r barplot, out.width = "100%", fig.height = 8, echo = FALSE}
 include_graphics("../results/07_barplot.png")
 ```
 
-## boxplot {.columns-2 .smaller}
+## Boxplots {.columns-2 .smaller}
 
 ```{r boxplot ALL, out.width = "100%", fig.height = 8, echo = FALSE}
 include_graphics("../results/07_boxplot_ALL.png")
