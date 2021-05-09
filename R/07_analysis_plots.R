@@ -19,11 +19,9 @@ source(file = "R/99_project_functions.R")
 
 # Define top 25 significant genes
 top_25_genes <- top_genes %>% 
-  group_by(gene) %>% 
-  nest() %>% 
+  groupnest(gene) %>% 
   head(n = 25L) %>% 
   select(gene)
-  
   
 # Average of top gene data
 top_genes_avg <- top_genes %>% 
