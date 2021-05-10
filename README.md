@@ -17,21 +17,26 @@ We also want to take a look at which genes are upregulated in leukemia patients 
 By statistical evaluation, we will examine whether there is a significant difference in gene expression of key genes between ALL and AML. 
 
 ## Code style
-The analysis is carried out through the Tidyverse-package.
+The analysis is carried out using functions from the Tidyverse-package.
+
+## Content
+In the repository of this project you can find a 'data', 'R', 'results' and 'doc'-folder containing the materials, methods and results used and found from this project.
+
+We have in the 'doc'-folder prepared a presentation of the project in a ioslide format.
 
 ## Analysis procedure
 In the 'R'-folder you find the scripts used to carry out the analysis. 
-To begin with, tidying and data wrangling is achieved from the first 3 scripts. 
-In the 01_load.R file, the data set is loaded and x and y is extracted as tibbles from this file. 
-The 02_clean.R script merges the x and y into a single tibble. 
-In the 03_augment.R script, a binarization of the cancer types is made following addition of a patient ID column.
-Secondly, we did modeling on the analysis-ready data obtained from the first 3 scripts. 
-In the 04_analysis_statistics.R file, we found 
+To begin with, tidying and data wrangling is achieved.
+We decided based on the large range of expression levels to standardize the gene expression by subtracting the mean and dividing by the standard deviation.
+After data transformation, modeling in form of logistic regression, PCA and K-means clustering was attempted. PCA and K-means were however not appropriate for this data set. 
+We have furthermore found the most significant genes chosen by lowest p-value. We decided to go with the top 1% equal to 71 genes.
+To visualize our data, we have created plots of these most significant genes by making bar charts, heatmap and boxplots. 
 
-Lastly, we have prepared a presentation on the project in the 'doc'-folder in a ioslide format.
-
-You can run the entire analysis through the 00_doit.R script. 
+The entire project analysis can be carried out by running the 00_doit.R script. 
 
 ## Dead-ends
 Through this project we carried out the supervised learning techniques; principal component analysis (PCA) and K-means clustering analysis. 
 These methods were however not suitable for this data set. 
+
+## Authors
+The people that contributed to this project are Charlotte Würtzen s174564, Emma Ahrensbach Rørbeck s173733, Julie Maria Johansen s174595, Simone Majken Stegenborg-Grathwohl s174596.
