@@ -235,7 +235,7 @@ histogram <- golub_clean_aug %>%
 ```
 <p class="forceBreak"></p>
 ```{r bar count, out.width = "100%", fig.height = 8, echo = FALSE}
-include_graphics("../results/07_barcount.png")
+include_graphics("../results/07_histogram.png")
 ```
 
 ## heatmap

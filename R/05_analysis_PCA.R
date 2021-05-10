@@ -145,7 +145,8 @@ p3 <- pca_aug_k_type_pca %>%
   geom_point() +
   xlab(label = "Principal Component 1") +
   labs(color = "PCA cluster") + 
-  theme(legend.position = "bottom", axis.title.y=element_blank())
+  theme(legend.position = "bottom", 
+        axis.title.y=element_blank())
 
 kmeans_plot <- p1 + p2 + p3 + 
   plot_annotation(title = "K-means analysis",

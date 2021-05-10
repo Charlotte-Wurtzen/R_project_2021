@@ -1,0 +1,13 @@
+name: Golub_App
+title: Golub_App
+username:
+account: charlotte-wrtzen
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 4099337
+bundleId: 4573688
+url: https://charlotte-wrtzen.shinyapps.io/Golub_App/
+when: 1620465644.11657
+lastSyncTime: 1620465644.11658
+asMultiple: FALSE
+asStatic: FALSE
