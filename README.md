@@ -22,7 +22,7 @@ The language used in this project is R and the analysis is carried out using fun
 ## Content
 In the repository of this project you can find a 'data', 'R', 'results' and 'doc'-folder containing the materials, methods and results used and found from this project.
 
-We have in the 'doc'-folder prepared a presentation of the project in a ioslide format.
+We have in the 'doc'-folder prepared a presentation of the project in an ioslide format.
 
 ## Analysis procedure
 In the 'R'-folder you find the scripts used to carry out the analysis. 
@@ -35,7 +35,7 @@ To visualize our data, we have created plots of these most significant genes by 
 The entire project analysis can be carried out by running the 00_doit.R script. 
 
 ## Dead-ends
-Through this project we carried out the supervised learning techniques; principal component analysis (PCA) and K-means clustering analysis. 
+Through this project we carried out the unsupervised learning techniques; principal component analysis (PCA) and K-means clustering analysis. 
 These methods were however not suitable for this data set. 
 
 ## Authors
