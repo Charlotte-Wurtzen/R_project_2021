@@ -22,7 +22,7 @@ top_25_genes <- top_genes %>%
   groupnest(gene) %>% 
   head(n = 25L) %>% 
   select(gene)
-  
+
 # Average of top gene data
 top_genes_avg <- top_genes %>% 
   group_by(gene) %>% 
