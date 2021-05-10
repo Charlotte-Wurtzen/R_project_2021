@@ -3,6 +3,7 @@ title: "Identification of Important Genes in Leukemia Patients"
 output: 
   ioslides_presentation:
       widescreen: true
+      self_contained: true
 author: Emma Ahrensbach Rørbeck (s173733), Julie Maria Johansen (s174595), Simone Majken Stegenborg-Grathwohl (s174596), and Charlotte Würtzen (s174564)
 --- 
 
@@ -10,10 +11,11 @@ author: Emma Ahrensbach Rørbeck (s173733), Julie Maria Johansen (s174595), Simo
 .forceBreak { -webkit-column-break-after: always; break-after: column; }
 </style>
 
-```{r setup, include=FALSE}
+```{r setup, include = FALSE}
 rm(list = ls())
 knitr::opts_chunk$set(echo = FALSE)
 library("knitr")
+library(widgetframe)
 ```
 
 ## Introduction
@@ -27,13 +29,13 @@ library("knitr")
 
 ## Tidying
 ```{r, echo = FALSE, eval = TRUE, out.width = "90%",  fig.height = 3}
-include_graphics("Flowchart.PNG")
+include_graphics("images/Flowchart.PNG")
 
 ```
 
 ## Data Wrangling 
 ```{r, echo = FALSE, eval = TRUE, out.width = "100%",  fig.height = 3}
-include_graphics("LongerNest.PNG")
+include_graphics("images/LongerNest.PNG")
 
 ```
 
