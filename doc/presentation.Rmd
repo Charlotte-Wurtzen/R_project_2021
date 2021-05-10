@@ -15,7 +15,6 @@ author: Emma Ahrensbach Rørbeck (s173733), Julie Maria Johansen (s174595), Simo
 rm(list = ls())
 knitr::opts_chunk$set(echo = FALSE)
 library("knitr")
-library(widgetframe)
 ```
 
 ## Introduction
@@ -30,61 +29,19 @@ library(widgetframe)
 ## Tidying
 ```{r, echo = FALSE, eval = TRUE, out.width = "90%",  fig.height = 3}
 include_graphics("images/Flowchart.PNG")
-
 ```
 
 ## Data Wrangling 
 ```{r, echo = FALSE, eval = TRUE, out.width = "100%",  fig.height = 3}
 include_graphics("images/LongerNest.PNG")
-
 ```
 
 ## Modelling
 
 Logistic regression
 
-```{r, eval = FALSE, echo = TRUE}
-golub_model <- golub_long_nested %>%
-  mutate(mdl = map(data, ~glm(type ~ norm_expr_level,
-                              data = .x,
-                              family = binomial(link = "logit"))))
-
-golub_model <- golub_model %>%
-  mutate(mdl_tidy = map(mdl, ~tidy(.x,
-                                   conf.int = TRUE))) %>% 
-  unnest(mdl_tidy)
-```
-
-## Modelling
-
-PCA
-
-```{r, eval = FALSE, echo = TRUE}
-pca_fit <- golub_clean_aug %>% 
-  select(where(is.numeric),
-         -c(type, id)) %>% 
-  prcomp(scale = TRUE)
-```
-
-## Modelling
-
-PCA
-
-```{r, eval = FALSE, echo = TRUE}
-pca_fit <- golub_clean_aug %>% 
-  select(where(is.numeric),
-         -c(type, id)) %>% 
-  prcomp(scale = TRUE)
-```
-
-K means analysis
-
-```{r, eval = FALSE, echo = TRUE}
-k_type <- golub_clean_aug %>%
-  select(-c(type, 
-            value, 
-            id)) %>%
-  kmeans(centers = 2)
+```{r, echo = FALSE, eval = TRUE, out.width = "100%",  fig.height = 3}
+include_graphics("images/Modelling.PNG")
 ```
 
 # Results 
@@ -92,35 +49,6 @@ k_type <- golub_clean_aug %>%
 ## Visualisations
 ```{r bar count, out.width = "100%", fig.height = 8, echo = FALSE}
 include_graphics("../results/07_barcount.png")
-```
-
-%## Visualisations {.smaller}
-```{r, echo = FALSE, eval = FALSE}
-heatmap <- golub_top_genes %>% 
-  mutate(type = case_when(type == 0 ~ "ALL",
-                          type == 1 ~ "AML")) %>% 
-  ggplot(mapping = aes(x = id, 
-                       y = gene, 
-                       fill = norm_expr_level)) +
-  geom_tile() +
-  theme_classic(base_size = 12) +
-  ggtitle("Normalized gene expression levels distinguishing ALL and AML") + 
-  scale_fill_gradient2(low = "blue", 
-                       high = "red", 
-                       mid = "white",
-                       midpoint = 2) +
-  xlab(label = "Patient ID") + 
-  ylab(label = "Genes") + 
-  labs(fill = "Normalized expression level",
-       caption = "Data from Golub et al. (1999)") +
-  theme(legend.position="bottom",
-        plot.title = element_text(size = rel(1.7)),
-        axis.title.y = element_text(size = rel(1.4)),
-        axis.title.x = element_text(size = rel(1.4))) +
-  facet_grid(~type, 
-             switch = "x", 
-             scales = "free_x", 
-             space = "free_x")
 ```
 
 ## Visualisations
@@ -142,22 +70,6 @@ include_graphics("../results/07_boxplot_ALL.png")
 include_graphics("../results/07_boxplot_AML.png")
 ```
 
-## PCA {.columns-2 .smaller}
-```{r, out.width = "100%", echo = FALSE}
-include_graphics("../results/05_PCA_plot2.png")
-```
-<p class="forceBreak"></p>
-```{r, out.width = "100%", echo = FALSE}
-include_graphics("../results/05_PCA_plot3.png")
-```
-
-
-## K-means analysis
-```{r, out.width = "95%", echo = FALSE}
-include_graphics("../results/05_kmeans_plot.png")
-```
-
-
 # Discussion 
 ## Discussion
 - Data transformation
@@ -170,14 +82,6 @@ include_graphics("../results/05_kmeans_plot.png")
 <p class="forceBreak"></p>
 ```{r scree, out.width = "80%", fig.height = 8, echo = FALSE}
 include_graphics("../results/05_PCA_plot3.png")
-```
-
-## Discussion
-- Data transformation
-- Modelling 
-<p class="forceBreak"></p>
-```{r kmeans, out.width = "70%", fig.height = 8, echo = FALSE}
-include_graphics("../results/05_kmeans_plot.png")
 ```
 
 ## Discussion
