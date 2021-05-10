@@ -7,4 +7,7 @@ source(file = "R/05_analysis_PCA.R")
 source(file = "R/06_analysis_heatmap.R")
 source(file = "R/07_analysis_plots.R")
 
-# call to knitr
+rmarkdown::render("/cloud/project/doc/slideEmma.Rmd")
+
+knitr::knit(input = "/cloud/project/doc/slideEmma.Rmd",
+            output = "/cloud/project/doc/slideEmma.html")
