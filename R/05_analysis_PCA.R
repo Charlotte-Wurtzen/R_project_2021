@@ -74,7 +74,8 @@ plot2 <- pca_fit %>%
   labs(color = "Type", 
        title = "Projection of gene expressions unto PC1 and PC2",
        caption = "Data from Golub et al. (1999)") +
-  theme_bw()
+  theme_bw() + 
+  theme(plot.title = element_text(face = "bold"))
 
 # Plot of variance explained
 plot3 <- pca_fit %>% 
