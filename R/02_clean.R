@@ -7,8 +7,8 @@ library("tidyverse")
 
 
 # Load data ---------------------------------------------------------------
-x <- read_tsv(file = "data/golub_x.tsv.gz")
-y <- read_tsv(file = "data/golub_y.tsv.gz")
+x <- read_tsv(file = "data/01_golub_x.tsv.gz")
+y <- read_tsv(file = "data/01_golub_y.tsv.gz")
 
 
 # Wrangle data ------------------------------------------------------------

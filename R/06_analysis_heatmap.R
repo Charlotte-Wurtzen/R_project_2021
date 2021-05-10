@@ -44,7 +44,6 @@ plot1 <- golub_top_genes %>%
 
 # save plot ----------------------------------------------------------
 ggsave(filename = "results/06_heatmap.png", 
-       width = 16, 
-       height = 9, 
-       dpi = 72, 
+       width = 14, 
+       height = 8,
        plot = plot1)

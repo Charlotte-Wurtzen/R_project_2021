@@ -6,6 +6,7 @@ rm(list = ls())
 library("tidyverse")
 library("cowplot")
 library("patchwork")
+library("broom")
 
 
 # Define functions --------------------------------------------------------
@@ -155,13 +156,21 @@ kmeans_plot <- p1 + p2 + p3 +
 
 # Write data --------------------------------------------------------------
 ggsave("results/05_PCA_plot1.png",
-       plot = plot1)
+       plot = plot1,
+       width = 6, 
+       height = 4)
 
 ggsave("results/05_PCA_plot2.png",
-       plot = plot2)
+       plot = plot2,
+       width = 6, 
+       height = 4)
 
 ggsave("results/05_PCA_plot3.png",
-       plot = plot3)
+       plot = plot3,
+       width = 6, 
+       height = 4)
 
 ggsave("results/05_kmeans_plot.png",
-       plot = kmeans_plot)
+       plot = kmeans_plot,
+       width = 12, 
+       height = 4)

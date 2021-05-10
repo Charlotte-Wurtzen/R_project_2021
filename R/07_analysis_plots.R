@@ -140,13 +140,21 @@ boxplot_AML_topgene <- top_genes %>%
 
 # Write data --------------------------------------------------------------
 ggsave("results/07_barcount.png", 
-       plot = bar_count)
+       plot = bar_count,
+       width = 6, 
+       height = 4)
 
 ggsave("results/07_barplot.png", 
-       plot = bar_plot)
+       plot = bar_plot,
+       width = 6, 
+       height = 4)
 
 ggsave("results/07_boxplot_ALL.png", 
-       plot = boxplot_ALL_topgene)
+       plot = boxplot_ALL_topgene,
+       width = 6, 
+       height = 4)
 
 ggsave("results/07_boxplot_AML.png", 
-       plot = boxplot_AML_topgene)
+       plot = boxplot_AML_topgene,
+       width = 6, 
+       height = 4)

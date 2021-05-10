@@ -8,9 +8,3 @@ source(file = "R/06_analysis_heatmap.R")
 source(file = "R/07_analysis_plots.R")
 
 rmarkdown::render("/cloud/project/doc/presentation.Rmd")
-
-knitr::knit(input = "/cloud/project/doc/presentation.Rmd",
-            output = "/cloud/project/doc/presentation.html")
-
-knitr::knit(input = "/cloud/project/doc/pres.Rmd",
-            output = "/cloud/project/doc/pres.html")

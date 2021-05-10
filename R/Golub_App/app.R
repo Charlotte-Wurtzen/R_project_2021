@@ -29,7 +29,7 @@ plot_options = c("Boxplot",
 
 # APP: UI----- ------------------------------------------------------------
 ui <- fluidPage(theme = shinytheme("cerulean"),
-    titlePanel("The Golub Data Set: Normalized expression of genes deemed most significant with regards to leukemia"),
+    titlePanel("The Golub Data Set: Normalized expression of genes deemed most significant with regards to leukemia type"),
     sidebarLayout(
         sidebarPanel(
             selectInput("gene", 

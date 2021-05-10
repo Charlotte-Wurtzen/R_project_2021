@@ -22,8 +22,7 @@ y_data <- golub %>%
 
 # Write data --------------------------------------------------------------
 write_tsv(x = x_data,
-          path = "data/golub_x.tsv.gz")
+          file = "data/01_golub_x.tsv.gz")
 
 write_tsv(x = y_data,
-          path = "data/golub_y.tsv.gz")
-
+          file = "data/01_golub_y.tsv.gz")
