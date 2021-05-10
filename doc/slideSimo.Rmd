@@ -24,7 +24,7 @@ source(file = "../R/99_project_functions.R")
 
 ## Introduction
 ```{r tidyverse, echo = TRUE, out.width = "100%",  fig.height = 3}
-include_graphics("/hex-tidyverse.png")
+#include_graphics("/hex-tidyverse.png")
 ```
 - 7129 measurements of gene expressions
 - 72 Leukemia patients
@@ -60,13 +60,20 @@ head(golub_clean_aug, n=5L)
 
 
 ## More data wrangling 
-```{r pivot, echo = FALSE}
+```{r pivot, echo = TRUE}
 # Pivot longer 
 golub_long <- longer(golub_clean_aug)
 
 # Grouping and nesting 
 golub_long_nested <- groupnest(golub_long, gene)
 ```
+
+## Even more data wrangling
+```{r, echo=TRUE}
+#Nest code
+```
+- Nesting
+- Significant / Non significant 
 
 ## Modelling
 
@@ -241,7 +248,7 @@ histogram <- golub_clean_aug %>%
 ```
 <p class="forceBreak"></p>
 ```{r bar count, out.width = "100%", fig.height = 8, echo = FALSE}
-include_graphics("../results/07_histogram.png")
+#include_graphics("../results/07_histogram.png")
 ```
 
 ## heatmap
