@@ -28,9 +28,10 @@ golub_clean <- ALL %>% full_join(AML)
 # Binarize type
 golub_clean_aug <- golub_clean %>% 
   mutate(type = case_when(value == "ALL" ~ 0,
-                            value == "AML" ~ 1)) %>% 
+                          value == "AML" ~ 1)) %>% 
   mutate(id = row_number()) %>% 
-  relocate(c(id, type))
+  relocate(c(id, 
+             type))
 
 
 # Write data --------------------------------------------------------------

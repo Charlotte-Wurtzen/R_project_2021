@@ -12,10 +12,9 @@ y <- read_tsv(file = "data/golub_y.tsv.gz")
 
 
 # Wrangle data ------------------------------------------------------------
-golub_clean <- bind_cols(x,y)
+golub_clean <- bind_cols(x, y)
 
 
 # Write data --------------------------------------------------------------
 write_tsv(x = golub_clean,
           path = "data/02_golub_clean.tsv.gz")
-
