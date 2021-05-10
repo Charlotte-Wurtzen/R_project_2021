@@ -22,255 +22,51 @@ source(file = "../R/99_project_functions.R")
 ```
 
 
-## Introduction
-
-
-# Methods
-
-## Data wrangling {.smaller}
-
-```{r wrangle, echo = TRUE}
-x_data <- golub %>% 
-  pluck("x") %>% 
-  as_tibble()
-
-y_data <- golub %>% 
-  pluck("y") %>% 
-  as_tibble()
-
-golub_clean <- bind_cols(x_data,y_data)
-
-golub_clean_aug <- golub_clean %>% 
-  mutate(type = case_when(value == "ALL" ~ 0,
-                          value == "AML" ~ 1)) %>% 
-  mutate(id = row_number()) %>% 
-  relocate(c(id, type))
-
-```
-
-```{r, cars, echo=FALSE}
-head(golub_clean_aug, n=5L)
-```
-
-
-## More data wrangling 
-```{r pivot, echo = FALSE}
-# Pivot longer 
-golub_long <- longer(golub_clean_aug)
-
-# Grouping and nesting 
-golub_long_nested <- groupnest(golub_long, gene)
-```
-
 ## Modelling
 
-## Logistic regression
+Logistic regression
 
-```{r logit, echo = TRUE, warning = FALSE, eval = FALSE}
+```{r, eval = FALSE, echo = TRUE}
 golub_model <- golub_long_nested %>%
   mutate(mdl = map(data, ~glm(type ~ norm_expr_level,
                               data = .x,
                               family = binomial(link = "logit"))))
 
-```
-
-```{r, echo=FALSE, eval = FALSE}
-head(golub_model, n=10L)
-```
-
-```{r, include = FALSE, eval = FALSE}
-# Add model information
 golub_model <- golub_model %>%
-  mutate(mdl_tidy = map(mdl, ~tidy(.x, conf.int = TRUE))) %>% 
+  mutate(mdl_tidy = map(mdl, ~tidy(.x,
+                                   conf.int = TRUE))) %>% 
   unnest(mdl_tidy)
-
-# Look at slope only (remove intercept rows)
-golub_model <- golub_model %>% 
-  filter(str_detect(term, "level")) %>% 
-  select(-term)
-
-# Significance of p < alpha
-alpha <- 0.01
-
-golub_model <- golub_model %>% 
-  mutate(identified_as = case_when(p.value < alpha ~ "Significant",
-                                   p.value >= alpha ~ "Non-significant"))
-
-# Extract significant genes
-significant_genes <- golub_model %>% 
-  filter(identified_as == "Significant")
-
-# Top genes
-top_genes <- significant_genes %>% 
-  arrange(p.value) %>% 
-  head(n = 71L) %>% 
-  unnest(data) %>% 
-  select(c(id, gene, type, norm_expr_level))
-
 ```
 
-```{r, include = FALSE}
-top_genes <- read_tsv(file = "../data/04_top_genes.tsv.gz")
+## Modelling
 
-```
+PCA
 
-
-
-## PCA {.columns-2 .smaller}
-
-
-```{r, include = FALSE}
-top_gene_names = top_genes %>% 
-  groupnest(gene) %>% 
-  head(n = 10L) %>% 
-  select(-data)
-```
-
-```{r pca, echo = TRUE}
+```{r, eval = FALSE, echo = TRUE}
 pca_fit <- golub_clean_aug %>% 
   select(where(is.numeric),
          -c(type, id)) %>% 
   prcomp(scale = TRUE)
 ```
 
-```{r, include = FALSE}
-pca_aug <- pca_fit %>% 
-  augment(golub_clean_aug)
+## Modelling
+
+PCA
+
+```{r, eval = FALSE, echo = TRUE}
+pca_fit <- golub_clean_aug %>% 
+  select(where(is.numeric),
+         -c(type, id)) %>% 
+  prcomp(scale = TRUE)
 ```
-<p class="forceBreak"></p>
 
-```{r PCA_plot, echo = FALSE, out.width = "100%",  fig.height = 3}
-include_graphics("../results/05_PCA_plot2.png")
-```
+K means analysis
 
-
-## K-means 
-```{r, echo = TRUE}
-# Kmeans clustering based on gene expressions
+```{r, eval = FALSE, echo = TRUE}
 k_type <- golub_clean_aug %>%
-  select(-c(type, value, id)) %>%
+  select(-c(type, 
+            value, 
+            id)) %>%
   kmeans(centers = 2)
 ```
-
-```{r, include = FALSE}
-
-pca_aug_k_type <- k_type %>%
-  augment(pca_aug) %>% 
-  rename(cluster_type = .cluster)
-
-```
-
-```{r}
-# Kmeans clustering based on principal components 
-k_pca <- pca_aug_k_type %>%
-  select(.fittedPC1, .fittedPC2) %>%
-  kmeans(centers = 2)
-
-```
-```{r, include = FALSE}
-pca_aug_k_type_pca <- k_pca %>%
-  augment(pca_aug_k_type) %>% 
-  rename(cluster_pca = .cluster)
-```
-
-<center>
-```{r kmeans_plot, echo = FALSE, out.width = "75%", fig.height= 4}
-include_graphics("../results/05_kmeans_plot.png")
-```
-></center>
-
-# Results 
-
-## histogram {.columns-2 .smaller}
-```{r, include = FALSE}
-# Pivot longer 
-golub_data_long <- longer(golub_clean_aug)
-
-# Average of top gene data
-top_genes_avg <- top_genes %>% 
-  group_by(gene) %>% 
-  summarise(avg_norm_expr_level = mean(norm_expr_level))
-
-# Separate top gene data on cancer type and find average
-avg_ALL_top <- top_genes %>% 
-  filter(type == 0) %>% 
-  select(-c(type, id)) %>% 
-  group_by(gene) %>% 
-  summarise(avg_norm_expr_level = mean(norm_expr_level)) 
-
-avg_AML_top <- top_genes %>% 
-  filter(type == 1) %>% 
-  select(-c(type, id)) %>% 
-  group_by(gene) %>% 
-  summarise(avg_norm_expr_level = mean(norm_expr_level))
-
-# Take out the gene name with the highest expression level
-top1_avg_ALL <- avg_ALL_top %>% 
-  arrange(desc(avg_norm_expr_level)) %>%
-  head(n=1L) %>% 
-  pull(gene)
-
-top1_avg_AML <- avg_AML_top %>% 
-  arrange(desc(avg_norm_expr_level)) %>%
-  head(n=1L) %>% 
-  pull(gene)
-
-```
-
-```{r, echo = TRUE, message = FALSE}
-histogram <- golub_clean_aug %>%
-  mutate(type = case_when(type == 0 ~ "ALL",
-                          type == 1 ~ "AML")) %>% 
-  count(type) %>% 
-  ggplot(aes(x = type, y = n, fill = factor(type))) +
-  geom_col(alpha = 0.8) +
-  labs(title = "Number of patients with each cancer type",
-       caption = "Data from Golub et al. (1999)",
-       fill = "Cancer type") +
-  ylab(label= "Number of patients") +
-   theme_minimal_grid(12) +
-  theme(legend.position = "right",
-        axis.title.x = element_blank()) +   
-  scale_x_discrete(breaks = NULL)
-```
-<p class="forceBreak"></p>
-```{r bar count, out.width = "100%", fig.height = 8, echo = FALSE}
-include_graphics("../results/07_histogram.png")
-```
-
-## heatmap
-```{r heatmap, out.width = "100%", fig.height = 8, echo = FALSE}
-include_graphics("../results/06_heatmap.png")
-```
-## bar plot
-
-```{r barplot, out.width = "100%", fig.height = 8, echo = FALSE}
-include_graphics("../results/07_barplot.png")
-```
-
-## boxplot {.columns-2 .smaller}
-
-```{r boxplot ALL, out.width = "100%", fig.height = 8, echo = FALSE}
-include_graphics("../results/07_boxplot_ALL.png")
-```
-<p class="forceBreak"></p>
-```{r boxplot AML, out.width = "100%", fig.height = 8, echo = FALSE}
-include_graphics("../results/07_boxplot_AML.png")
-```
-
-# Discussion
-
-- important to distinguish which genes are important/significant
-- missing reference/control group to compare with healthy individuals
-- data set possibly more suitable for neural network analysis => prediction of cancer type
-- PCA and K-means not relevant for this data? 
-dimensionality reduction not ideal when variance explained is so low for each PC
-Not clear cluster differentiation
-
-## Conclusion
-
-- sum up
-
-
-
 
