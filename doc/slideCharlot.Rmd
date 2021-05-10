@@ -25,14 +25,14 @@ source(file = "../R/99_project_functions.R")
 
 # Results 
 
-## Bar plot of cancer type count 
+## Visualisations
 ```{r bar count, out.width = "100%", fig.height = 8, echo = FALSE}
 include_graphics("../results/07_barcount.png")
 ```
 
-## Visualising gene expression levels with heatmap {.smaller}
+## Visualisations {.smaller}
 
-### Building the code
+### Heatmap: Building the code
 ```{r, echo = TRUE, eval = FALSE}
 heatmap <- golub_top_genes %>% 
   mutate(type = case_when(type == 0 ~ "ALL",
@@ -61,17 +61,17 @@ heatmap <- golub_top_genes %>%
              space = "free_x")
 ```
 
-## Visualising gene expression levels with heatmap
+## Visualisations
 ```{r heatmap, out.width = "100%", fig.height = 8, echo = FALSE}
 include_graphics("../results/06_heatmap.png")
 ```
 
-## Bar plot
+## Visualisations
 ```{r barplot, out.width = "100%", fig.height = 8, echo = FALSE}
 include_graphics("../results/07_barplot.png")
 ```
 
-## Boxplots {.columns-2 .smaller}
+## Visualisations {.columns-2 .smaller}
 ```{r boxplot ALL, out.width = "100%", fig.height = 8, echo = FALSE}
 include_graphics("../results/07_boxplot_ALL.png")
 ```

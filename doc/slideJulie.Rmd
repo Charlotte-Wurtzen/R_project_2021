@@ -28,6 +28,7 @@ source(file = "../R/99_project_functions.R")
 # Discussion 
 ## Discussion
 - Data transformation
+  - Normalization vs. log2-fold
 ```{r transformation, eval=FALSE, echo = TRUE}
 data %>% 
     pivot_longer(cols = -c(type, value, id),
