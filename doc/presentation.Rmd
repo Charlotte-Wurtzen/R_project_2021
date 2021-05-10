@@ -1,9 +1,9 @@
 ---
-title: "Leukemia"
+title: "Identification of Important Genes in Leukemia Patients"
 output: 
   ioslides_presentation:
       widescreen: true
-author: Emma Ahrensbach Rørbeck (s173733), Julie Maria Johansen (s174595), Simone Majken Stegenborg-Grathwohl (s174596) and Charlotte Würtzen (s174564)
+author: Emma Ahrensbach Rørbeck (s173733), Julie Maria Johansen (s174595), Simone Majken Stegenborg-Grathwohl (s174596), and Charlotte Würtzen (s174564)
 --- 
 
 <style>
