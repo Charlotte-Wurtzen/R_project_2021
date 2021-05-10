@@ -17,7 +17,7 @@ We also want to take a look at which genes are upregulated in leukemia patients 
 By statistical evaluation, we will examine whether there is a significant difference in gene expression of key genes between ALL and AML. 
 
 ## Code style
-The analysis is carried out using functions from the Tidyverse-package.
+The language used in this project is R and the analysis is carried out using functions from the Tidyverse-package.
 
 ## Content
 In the repository of this project you can find a 'data', 'R', 'results' and 'doc'-folder containing the materials, methods and results used and found from this project.
