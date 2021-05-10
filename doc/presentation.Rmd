@@ -47,7 +47,7 @@ include_graphics("images/Modelling.PNG")
 # Results 
 
 ## Visualisations
-```{r bar count, out.width = "100%", fig.height = 8, echo = FALSE}
+```{r bar count, out.width = "75%", fig.height = 8, echo = FALSE}
 include_graphics("../results/07_barcount.png")
 ```
 
@@ -57,7 +57,7 @@ include_graphics("../results/06_heatmap.png")
 ```
 
 ## Visualisations
-```{r barplot, out.width = "100%", fig.height = 8, echo = FALSE}
+```{r barplot, out.width = "85%", fig.height = 8, echo = FALSE}
 include_graphics("../results/07_barplot.png")
 ```
 
@@ -80,7 +80,7 @@ include_graphics("../results/07_boxplot_AML.png")
 - Data transformation
 - Modelling 
 <p class="forceBreak"></p>
-```{r scree, out.width = "80%", fig.height = 8, echo = FALSE}
+```{r scree, out.width = "75%", fig.width = 8, echo = FALSE}
 include_graphics("../results/05_PCA_plot3.png")
 ```
 
@@ -111,3 +111,13 @@ include_graphics("../results/07_boxplot_AML.png")
 - Logistic regression and p-values used for deciding important genes
 - We were able to convey our message through plots 
 - The most important genes for AML and ALL found in our project are also found to be involved in leukemia in literature
+
+## References
+The data set:
+https://github.com/ramhiser/datamicroarray
+
+[1] Handschuh L, Kaźmierczak M, Milewski MC, et al. Gene expression profiling of acute myeloid leukemia samples from adult patients with AML-M1 and -M2 through boutique microarrays, real-time PCR and droplet digital PCR. Int J Oncol. 2018;52(3):656-678. doi: 10.3892/ijo.2017.4233
+
+[2] Wei R, Qiu H, Xu J, Mo J, Liu Y, Gui Y, Huang G, Zhang S, Yao H, Huang X, Gan Z. Expression and prognostic potential of GPX1 in human cancers based on data mining. Ann Transl Med. 2020 Feb;8(4):124. doi: 10.21037/atm.2020.02.36. PMID: 32175417; PMCID: PMC7049064.
+
+[3] Aulbert E, Schmidt CG. Ferritin--a tumor marker in myeloid leukemia. Cancer Detect Prev. 1985;8(1-2):297-302. PMID: 3864536.
