@@ -107,9 +107,11 @@ boxplot_ALL_topgene <- top_genes %>%
   facet_wrap(vars(type), 
              strip.position = "bottom", 
              scales = "free_x") +
-  labs(title = str_c("Boxplots of expression levels of gene",top1_avg_ALL,sep = " "),
+  labs(title = str_c("Boxplots of expression levels of gene ", top1_avg_ALL),
        caption = "Data from Golub et al. (1999)",
-       subtitle = str_c("The chosen gene ",top1_avg_ALL, " has the highest average expression for ALL.")) +
+       subtitle = str_c("The chosen gene ",
+                        top1_avg_ALL, 
+                        " has the highest average expression for ALL.")) +
   ylab(label = "Normalized expression level") +
   theme(axis.text.x=element_blank(),
         axis.ticks.x=element_blank(),
@@ -124,40 +126,23 @@ boxplot_AML_topgene <- top_genes %>%
   geom_boxplot(alpha=0.5) +
   facet_wrap(vars(type), 
              strip.position = "bottom", 
-             scales = "free_x")+
-  labs(title = str_c("Boxplots of expression levels of gene", top1_avg_AML, sep = " "),
+             scales = "free_x") +
+  labs(title = str_c("Boxplots of expression levels of gene ", top1_avg_AML),
        caption = "Data from Golub et al. (1999)",
-       subtitle = str_c("The chosen gene ", top1_avg_AML, " has the highest average expression for AML.")) +
+       subtitle = str_c("The chosen gene ", 
+                        top1_avg_AML, 
+                        " has the highest average expression for AML.")) +
   ylab(label = "Normalized expression level") +
   theme(axis.text.x=element_blank(),
         axis.ticks.x=element_blank(),
         legend.position = "none")
 
 
-<<<<<<< HEAD
-# Scatter plot 
-scatter_plot <- top_genes_avg %>% 
-  ggplot(mapping = aes(x = gene, 
-                       y = avg_norm_expr_level, 
-                       colour = avg_norm_expr_level)) +
-  geom_point() + 
-  scale_color_gradient(low = "blue", 
-                       high = "red") +
-  theme_minimal() +
-  ylab(label = "Normalized Expression Level") +
-  xlab(label = "Gene") +
-  labs(title = "Expression level shown for each of the top 1% significant genes", 
-       caption = "Data from Golub et al. (1999)",
-       color = "Expression") +
-  theme(legend.position = 'bottom', 
-        axis.text.x = element_text(angle = 45, hjust=1))
-
-
 # Write data --------------------------------------------------------------
-ggsave("results/07_histogram.png", 
-       plot = histogram)
+ggsave("results/07_barcount.png", 
+       plot = bar_count)
 
-ggsave("results/07_barplot.png",
+ggsave("results/07_barplot.png", 
        plot = bar_plot)
 
 ggsave("results/07_boxplot_ALL.png", 
@@ -165,13 +150,3 @@ ggsave("results/07_boxplot_ALL.png",
 
 ggsave("results/07_boxplot_AML.png", 
        plot = boxplot_AML_topgene)
-=======
-# Write data --------------------------------------------------------------
-ggsave("results/07_barcount.png", plot = bar_count)
-ggsave("results/07_barplot.png", plot = bar_plot)
-ggsave("results/07_boxplot_ALL.png", plot = boxplot_ALL_topgene)
-ggsave("results/07_boxplot_AML.png", plot = boxplot_AML_topgene)
->>>>>>> a7c06f9e5859ad08ecf9fe2fc8d03d16127a1ef1
-
-ggsave("results/07_scatter_plot.png", 
-       plot = scatter_plot)

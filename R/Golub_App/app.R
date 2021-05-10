@@ -23,7 +23,7 @@ top_gene_names = top_genes %>%
     select(-data)
 
 plot_options = c("Boxplot", 
-                 "Histogram", 
+                 "Bar plot", 
                  "Scatterplot")
 
 
@@ -66,8 +66,7 @@ server <- function(input, output) {
                 facet_wrap(vars(type), 
                            strip.position = "bottom", 
                            scales = "free_x") +
-                labs(title = str_c("Boxplots of expression levels of gene", input$gene, 
-                                   sep = " "),
+                labs(title = str_c("Boxplots of expression levels of gene ", input$gene),
                      caption = "Data from Golub et al. (1999)") +
                 ylab(label = "Normalized expression level") +
                 theme_bw() +
@@ -75,7 +74,7 @@ server <- function(input, output) {
                       axis.ticks.x = element_blank(),
                       legend.position = "none")
             
-        } else if (plotChoice() == "Histogram"){
+        } else if (plotChoice() == "Bar plot"){
             ggplot(data(), 
                    mapping = aes(x = id, 
                                  y = norm_expr_level, 
@@ -83,7 +82,9 @@ server <- function(input, output) {
                 geom_col(position = "dodge", 
                          width = 0.7) +
                 theme_bw() +
-                labs(title = str_c("Normalized gene expression of ", input$gene, " according to cancer type"),
+                labs(title = str_c("Normalized gene expression of ", 
+                                   input$gene, 
+                                   " according to cancer type"),
                      caption = "Data from Golub et al. (1999)",
                      fill = "Cancer type") + 
                 xlab(label = "Patient id") + 
