@@ -57,7 +57,9 @@ histogram <- golub_clean_aug %>%
   mutate(type = case_when(type == 0 ~ "ALL",
                           type == 1 ~ "AML")) %>% 
   count(type) %>% 
-  ggplot(aes(x = type, y = n, fill = factor(type))) +
+  ggplot(aes(x = type, 
+             y = n, 
+             fill = factor(type))) +
   geom_col(alpha = 0.8) +
   labs(title = "Number of patients with each cancer type",
        caption = "Data from Golub et al. (1999)",
@@ -70,7 +72,8 @@ histogram <- golub_clean_aug %>%
 
 # Bar plot showing expression of top genes divided into type
 bar_plot <- avg_ALL_top %>% 
-  right_join(avg_AML_top, by = "gene") %>%
+  right_join(avg_AML_top, 
+             by = "gene") %>%
   rename(ALL = avg_norm_expr_level.x,
          AML = avg_norm_expr_level.y) %>% 
   sample_n(25) %>% 
@@ -78,7 +81,9 @@ bar_plot <- avg_ALL_top %>%
                names_to = "Type",
                values_to = "avg_expr") %>% 
   
-  ggplot(mapping = aes(x = avg_expr, y = gene, fill = Type)) +
+  ggplot(mapping = aes(x = avg_expr, 
+                       y = gene, 
+                       fill = Type)) +
   geom_col(position = "dodge") +
   theme_bw(base_size = 8) +
   theme(plot.title = element_text(hjust = 0.5)) + 
@@ -86,7 +91,7 @@ bar_plot <- avg_ALL_top %>%
        subtitle = "25 random significant genes.",
        caption = "Data from Golub et al. (1999)") + 
   xlab(label = "Average gene expression") + 
-  ylab(label="Genes")
+  ylab(label = "Genes")
 
 
 # Box plots of top average genes
@@ -98,7 +103,7 @@ boxplot_ALL_topgene <- top_genes %>%
   geom_boxplot(alpha=0.5) +
   facet_wrap(vars(type), 
              strip.position = "bottom", 
-             scales = "free_x")+
+             scales = "free_x") +
   labs(title = str_c("Boxplots of expression levels of gene",top1_avg_ALL,sep = " "),
        caption = "Data from Golub et al. (1999)",
        subtitle = str_c("The chosen gene ",top1_avg_ALL, " has the highest average expression for ALL.")) +
@@ -117,9 +122,9 @@ boxplot_AML_topgene <- top_genes %>%
   facet_wrap(vars(type), 
              strip.position = "bottom", 
              scales = "free_x")+
-  labs(title = str_c("Boxplots of expression levels of gene",top1_avg_AML,sep = " "),
+  labs(title = str_c("Boxplots of expression levels of gene", top1_avg_AML, sep = " "),
        caption = "Data from Golub et al. (1999)",
-       subtitle = str_c("The chosen gene ",top1_avg_AML, " has the highest average expression for AML.")) +
+       subtitle = str_c("The chosen gene ", top1_avg_AML, " has the highest average expression for AML.")) +
   ylab(label = "Normalized expression level") +
   theme(axis.text.x=element_blank(),
         axis.ticks.x=element_blank(),
@@ -132,7 +137,8 @@ scatter_plot <- top_genes_avg %>%
                        y = avg_norm_expr_level, 
                        colour = avg_norm_expr_level)) +
   geom_point() + 
-  scale_color_gradient(low = "blue", high = "red") +
+  scale_color_gradient(low = "blue", 
+                       high = "red") +
   theme_minimal() +
   ylab(label = "Normalized Expression Level") +
   xlab(label = "Gene") +
@@ -144,9 +150,17 @@ scatter_plot <- top_genes_avg %>%
 
 
 # Write data --------------------------------------------------------------
-ggsave("results/07_histogram.png", plot = histogram)
-ggsave("results/07_barplot.png", plot = bar_plot)
-ggsave("results/07_boxplot_ALL.png", plot = boxplot_ALL_topgene)
-ggsave("results/07_boxplot_AML.png", plot = boxplot_AML_topgene)
-ggsave("results/07_scatter_plot.png", plot = scatter_plot)
+ggsave("results/07_histogram.png", 
+       plot = histogram)
 
+ggsave("results/07_barplot.png",
+       plot = bar_plot)
+
+ggsave("results/07_boxplot_ALL.png", 
+       plot = boxplot_ALL_topgene)
+
+ggsave("results/07_boxplot_AML.png", 
+       plot = boxplot_AML_topgene)
+
+ggsave("results/07_scatter_plot.png", 
+       plot = scatter_plot)

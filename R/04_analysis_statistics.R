@@ -17,10 +17,19 @@ golub_clean_aug <- read_tsv(file = "data/03_golub_clean_aug.tsv.gz")
 # Wrangle data ------------------------------------------------------------
 
 # Pivot longer 
-golub_long <- longer(golub_clean_aug)
+golub_long <- golub_clean_aug %>% 
+  pivot_longer(cols = -c(type, 
+                         value, 
+                         id),
+               names_to = "gene", 
+               values_to = "expr_level") %>% 
+  mutate(norm_expr_level = (expr_level - mean(expr_level))/sd(expr_level)) %>% 
+  select(-c(value, 
+            expr_level))
 
 # Grouping and nesting 
-golub_long_nested <- groupnest(golub_long, gene)
+golub_long_nested <- groupnest(golub_long, 
+                               gene)
 
 
 # Modeling ------------------------------------------------------------
@@ -33,7 +42,8 @@ golub_model <- golub_long_nested %>%
 
 # Add model information
 golub_model <- golub_model %>%
-  mutate(mdl_tidy = map(mdl, ~tidy(.x, conf.int = TRUE))) %>% 
+  mutate(mdl_tidy = map(mdl, ~tidy(.x,
+                                   conf.int = TRUE))) %>% 
   unnest(mdl_tidy)
 
 # Look at slope only (remove intercept rows)
@@ -60,8 +70,12 @@ top_genes <- significant_genes %>%
   arrange(p.value) %>% 
   head(n = 71L) %>% 
   unnest(data) %>% 
-  select(c(id, gene, type, norm_expr_level))
+  select(c(id, 
+           gene, 
+           type, 
+           norm_expr_level))
 
 
 # Write data --------------------------------------------------------------
-write_tsv(x = top_genes, file = "data/04_top_genes.tsv.gz")
+write_tsv(x = top_genes, 
+          file = "data/04_top_genes.tsv.gz")

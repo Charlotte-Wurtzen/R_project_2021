@@ -27,7 +27,8 @@ top_gene_names = golub_top_genes %>%
 
 # Model data
 pca_fit <- golub_clean_aug %>% 
-  select(where(is.numeric),-c(type, id)) %>% 
+  select(where(is.numeric),
+         -c(type, id)) %>% 
   prcomp(scale = TRUE)
 
 pca_aug <- pca_fit %>% 
@@ -96,7 +97,9 @@ plot3 <- pca_fit %>%
 
 # Kmeans clustering based on gene expressions
 k_type <- golub_clean_aug %>%
-  select(-c(type, value, id)) %>%
+  select(-c(type, 
+            value, 
+            id)) %>%
   kmeans(centers = 2)
 
 pca_aug_k_type <- k_type %>%
@@ -106,7 +109,8 @@ pca_aug_k_type <- k_type %>%
 
 # Kmeans clustering based on principal components 
 k_pca <- pca_aug_k_type %>%
-  select(.fittedPC1, .fittedPC2) %>%
+  select(.fittedPC1, 
+         .fittedPC2) %>%
   kmeans(centers = 2)
 
 pca_aug_k_type_pca <- k_pca %>%
@@ -116,7 +120,9 @@ pca_aug_k_type_pca <- k_pca %>%
 
 # Plot type + clustering based on type and pca 
 p1 <- pca_aug %>% 
-  ggplot(aes(x = .fittedPC1, y = .fittedPC2, colour = factor(type))) +
+  ggplot(aes(x = .fittedPC1, 
+             y = .fittedPC2, 
+             colour = factor(type))) +
   geom_point() +
   ylab(label = "Principal Component 2") +
   xlab(label = "Principal Component 1") +
@@ -124,14 +130,18 @@ p1 <- pca_aug %>%
   theme(legend.position = "bottom")
 
 p2 <- pca_aug_k_type_pca %>%
-  ggplot(aes(x = .fittedPC1, y = .fittedPC2, colour = cluster_type)) +
+  ggplot(aes(x = .fittedPC1, 
+             y = .fittedPC2, 
+             colour = cluster_type)) +
   geom_point() +
   xlab(label = "Principal Component 1") +
   labs(color = "Gene cluster") + 
   theme(legend.position = "bottom", axis.title.y=element_blank())
 
 p3 <- pca_aug_k_type_pca %>%
-  ggplot(aes(x = .fittedPC1, y = .fittedPC2, colour = cluster_pca)) +
+  ggplot(aes(x = .fittedPC1, 
+             y = .fittedPC2, 
+             colour = cluster_pca)) +
   geom_point() +
   xlab(label = "Principal Component 1") +
   labs(color = "PCA cluster") + 
